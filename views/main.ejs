@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Cooking Recipes</title>
+    <style>
+        .recipe {
+            border: 1px solid #ccc;
+            padding: 10px;
+            margin: 10px;
+            display: inline-block;
+            width: 200px;
+            text-align: center;
+        }
+        .recipe img {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+        }
+    </style>
+</head>
+<body>
+    <h1   style=" background-color: aquamarine;     height: 80px;"  >Cooking Recipes</h1>
+    <div class="recipes-container">
+        <% for(let i = 0; i < recipes.length; i++) { %>
+            <div class="recipe">
+                <h3><%= recipes[i].name %></h3>
+                <img src=" <%= recipes[i].image %> " alt="<%= recipes[i].image %>">
+                <p><%= recipes[i].description %></p>
+                <p><%= recipes[i].steps %></p>
+
+            </div>
+        <% } %>
+    </div>
+</body>
+</html>
