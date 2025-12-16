@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Cooking Recipes</title>
+    <title>shop page</title>
     <style>
         .recipe {
             border: 1px solid #ccc;
@@ -19,15 +19,28 @@
     </style>
 </head>
 <body>
-    <h1   style=" background-color: aquamarine;     height: 80px;"  >Cooking Recipes</h1>
-    <div class="recipes-container">
-        <% for(let i = 0; i < recipes.length; i++) { %>
-            <div class="recipe">
-                <h3><%= recipes[i].name %></h3>
-                <img src=" <%= recipes[i].image %> " alt="<%= recipes[i].image %>">
-                <p><%= recipes[i].description %></p>
-                <p><%= recipes[i].steps %></p>
+    <div>
 
+        <h1   style=" background-color: aquamarine;     height: 80px;"  >Cooking Recipes</h1>
+        
+        <p ><a href="/newproduct">newproduct</a></p>
+        <p ><a href="/newproduct">cart</a></p>
+        <p ><a href="/newproduct">my orders</a></p>
+
+
+
+    </div>
+    <div class="recipes-container">
+        <% for(let i = 0; i < product.length; i++) { %>
+            <div class="recipe">
+                <h3><%= product[i].name %></h3>
+                <img src=" <%= product[i].image %> " alt="<%= product[i].image %>">
+                <p><%= product[i].description %></p>
+                <p><%= product[i].price%></p>
+                
+
+                <h5><a href="/editproduct/<%= product[i]._id %>">edit product</a></h5>
+                <h5><a href="/deleteproduct/<%= product[i]._id %>">delete   product </a></h5>
             </div>
         <% } %>
     </div>

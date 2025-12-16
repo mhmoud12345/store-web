@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>deletproduct</title>
+   
+</head>
+<body>
+
+
+     <main>
+   
+        <form action="/deleteproduct" method="post">
+
+<h1> are you sure to delet this product </h1>
+
+
+ <div class="product-container">
+        
+            <div class="product">
+                <h1><%= product.name %></h1>
+                <img src=" <%= product.image %> " alt="<%= product.image %>" >
+                <p><%= product.description %></p>
+                <h3><%= product.price%></h3>
+<input type="hidden"   name="_id"  value="<%= product._id %>">
+ 
+            <button class="btn" type="submit"> deleteproduct </button>
+        </form>   
+
+        
+    </main>
+</body>
+</html>

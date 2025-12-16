@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const chefesSchema = new mongoose.Schema({
+const userSchema = new mongoose.Schema({
     name: {
         type: String,
         required: true
@@ -18,10 +18,10 @@ const chefesSchema = new mongoose.Schema({
     }
 });
 
-const Chefes = mongoose.model('Chefes', chefesSchema)
+const user = mongoose.model('users', userSchema)
 
 async function createChefes() {
-    const chefes = new Chefes({
+    const User = new user({
         name: 'John Doe',
         numberofre: 5444,
         image: 'johndoe.jpg',
@@ -38,4 +38,4 @@ async function createChefes() {
     })
 }
 
-module.exports = { Chefes, createChefes };
+module.exports =  createChefes ;
