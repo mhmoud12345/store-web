@@ -3,7 +3,7 @@
 <head>
     <title>shop page</title>
     <style>
-        .recipe {
+        .product {
             border: 1px solid #ccc;
             padding: 10px;
             margin: 10px;
@@ -11,11 +11,7 @@
             width: 200px;
             text-align: center;
         }
-        .recipe img {
-            width: 100%;
-            height: 150px;
-            object-fit: cover;
-        }
+        
     </style>
 </head>
 <body>
@@ -30,17 +26,18 @@
 
 
     </div>
-    <div class="recipes-container">
+    <div class="product-container">
         <% for(let i = 0; i < product.length; i++) { %>
-            <div class="recipe">
+            <div class="  product  ">
                 <h3><%= product[i].name %></h3>
-                <img src=" <%= product[i].image %> " alt="<%= product[i].image %>">
+                <img src=" <%= product[i].image %> " alt="<%= product[i].image %>"    style="width: 100px; height:100px;">
                 <p><%= product[i].description %></p>
                 <p><%= product[i].price%></p>
                 
 
                 <h5><a href="/editproduct/<%= product[i]._id %>">edit product</a></h5>
                 <h5><a href="/deleteproduct/<%= product[i]._id %>">delete   product </a></h5>
+                <h5><a href="/details/<%= product[i]._id %>">details</a></h5>
             </div>
         <% } %>
     </div>

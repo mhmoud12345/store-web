@@ -1,7 +1,6 @@
 const path = require("path");
 const products = require("../model/products");
 
-///////////////
 async function getAllpruducts(req, res) {
   const data = await products.feichAllproducts();
   // console.log("data from db", data);
@@ -9,13 +8,9 @@ async function getAllpruducts(req, res) {
   res.render("main", { product: data });
 }
 
-/////////////////
-
 function addproduct(req, res) {
   res.render("newproduct");
 }
-
-//////////////////////////
 
 function postproduct(req, res) {
   // read fields from req.body (requires express.urlencoded middleware)
@@ -31,8 +26,6 @@ function postproduct(req, res) {
     });
 }
 
-////////////////////////////
-
 async function geteditproduct(req, res) {
   const productid = req.params._id;
   try {
@@ -40,54 +33,54 @@ async function geteditproduct(req, res) {
     res.render("neweditedproduct", { product: product });
   } catch (err) {
     console.log(err);
-    res.status(500).send('Error fetching product');
+    res.status(500).send("Error fetching product");
   }
 }
-//////////////////////////////////////////////////////////////
 
+async function posteditproduct(req, res) {
+  console.log("body:", req.body);
+  const { name, price, imageUrl, description, _id } = req.body;
 
-async function posteditproduct (req,res){
- console.log("body:", req.body);
-  const { name, price, imageUrl, description ,_id} = req.body;
+  await products.updateproduct(name, price, imageUrl, description, _id);
 
- await products.updateproduct(name,price,imageUrl,description,_id)
-
-res.redirect('/')
+  res.redirect("/");
 }
 
-/////////////////////////////////
+async function getdeleteproduct(req, res) {
+  const _id = req.params._id;
 
-
-async function getdeleteproduct  (req,res){
-
-const _id=req.params._id
-
-try{
-
-
-const   product= await products.findproduct(_id)
-res.render("deleteproduct",{product:product})
-
-}catch(err){
-
-console.log(err)
-
+  try {
+    const product = await products.findproduct(_id);
+    res.render("deleteproduct", { product: product });
+  } catch (err) {
+    console.log(err);
+  }
 }
 
+function postdeleteproduct(req, res) {
+  const _id = req.body._id;
+
+  products.deleteproduct(_id);
+
+  res.redirect("/");
 }
 
-////////////////////////////////////////////
+async function getdetails(req, res) {
+  const _id = req.params._id;
 
-function    postdeleteproduct(req,res){
+  const product = await products.findproduct(_id);
 
- const _id=req.body._id
-
-products.deleteproduct(_id)
-
-res.redirect("/")
+  console.log(product);
+  res.render("productdetails", { product: product });
 }
 
-
-
-
-module.exports = { getAllpruducts, addproduct, postproduct, geteditproduct,posteditproduct,getdeleteproduct,postdeleteproduct };
+module.exports = {
+  getAllpruducts,
+  addproduct,
+  postproduct,
+  geteditproduct,
+  posteditproduct,
+  getdeleteproduct,
+  postdeleteproduct,
+  getdetails,
+};
