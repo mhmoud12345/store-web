@@ -39,10 +39,12 @@ async function createuser(name,image) {
 
 function addtocart(product){
 
-const findproduct=users.cart.items.find(cb=>{
+const findproductin=users.cart.items.find(cb=>{
         return product._id===cb.productId;}
 )
 if(findproduct){
+
+  findproduct.quantity=findproduct.quantity+1;
 
 
 
