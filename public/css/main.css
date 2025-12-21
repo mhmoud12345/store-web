@@ -1,0 +1,283 @@
+
+/* =========================================================
+   Store Web — Professional CSS
+   Author: You
+   Notes:
+   - Themeable via <body class="theme-emerald|theme-blue|theme-rose|theme-sand">
+   - Designed for your HTML/EJS template
+   ========================================================= */
+
+/* 1) Design Tokens (Theme Variables) */
+:root {
+    --radius-lg: 16px;
+    --radius-md: 12px;
+    --radius-sm: 8px;
+
+    --shadow-sm: 0 4px 12px rgba(0, 0, 0, 0.08);
+    --shadow-md: 0 8px 18px rgba(0, 0, 0, 0.12);
+    --shadow-lg: 0 12px 28px rgba(0, 0, 0, 0.16);
+
+    --transition: 0.28s cubic-bezier(.2,.8,.2,1);
+
+    --font-ui: 'Inter', Arial, Helvetica, sans-serif;
+    --container-max: 1200px;
+}
+
+/* Default Theme (Emerald – Great for Stores) */
+.theme-emerald {
+    --brand-900: #064e3b;
+    --brand-800: #065f46;
+    --brand-700: #047857;
+    --brand-600: #059669;
+    --brand-500: #10b981; /* Primary */
+    --brand-200: #a7f3d0;
+
+    --ink-900: #0b1220;
+    --ink-700: #1f2937;
+    --ink-500: #4b5563;
+    --ink-300: #9ca3af;
+
+    --bg-50: #f8fafc;
+    --card: #ffffff;
+    --accent: #0ea5e9;
+    --danger: #ef4444;
+}
+
+/* Alt Theme: Blue (Tech / Electronics) */
+.theme-blue {
+    --brand-900: #1e3a8a;
+    --brand-800: #1e40af;
+    --brand-700: #1d4ed8;
+    --brand-600: #2563eb;
+    --brand-500: #3b82f6;
+    --brand-200: #bfdbfe;
+
+    --ink-900: #0b1220;
+    --ink-700: #1f2937;
+    --ink-500: #4b5563;
+    --ink-300: #9ca3af;
+
+    --bg-50: #f8fafc;
+    --card: #ffffff;
+    --accent: #14b8a6;
+    --danger: #dc2626;
+}
+
+/* Alt Theme: Rose (Beauty / Boutique) */
+.theme-rose {
+    --brand-900: #7f1d1d;
+    --brand-800: #9f1239;
+    --brand-700: #be123c;
+    --brand-600: #e11d48;
+    --brand-500: #f43f5e;
+    --brand-200: #fecdd3;
+
+    --ink-900: #1f1d2b;
+    --ink-700: #333244;
+    --ink-500: #6b7280;
+    --ink-300: #a1a1aa;
+
+    --bg-50: #fff7f9;
+    --card: #ffffff;
+    --accent: #f59e0b;
+    --danger: #dc2626;
+}
+
+/* Alt Theme: Sand (Home / Lifestyle) */
+.theme-sand {
+    --brand-900: #3a2f27;
+    --brand-800: #4e3e34;
+    --brand-700: #6b4f3a;
+    --brand-600: #8b5e3c;
+    --brand-500: #d4a373;
+    --brand-200: #f1e0c6;
+
+    --ink-900: #1c1917;
+    --ink-700: #374151;
+    --ink-500: #6b7280;
+    --ink-300: #a8a29e;
+
+    --bg-50: #faf7f2;
+    --card: #ffffff;
+    --accent: #0ea5e9;
+    --danger: #b91c1c;
+}
+
+/* 2) Base / Reset */
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html, body { height: 100%; }
+body {
+    font-family: var(--font-ui);
+    background-color: var(--bg-50);
+    color: var(--ink-700);
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+/* 3) Navbar */
+.navbar {
+    background: linear-gradient(90deg, var(--brand-900), var(--brand-600));
+    padding: 16px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    box-shadow: var(--shadow-sm);
+    position: sticky;
+    top: 0;
+    z-index: 50;
+}
+
+.navbar h1 {
+    color: #fff;
+    font-size: 24px;
+    font-weight: 800;
+    letter-spacing: 0.2px;
+}
+
+.navbar nav a {
+    color: #eaf2ff;
+    margin-left: 20px;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 15px;
+    position: relative;
+    transition: color var(--transition);
+}
+
+.navbar nav a::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -6px;
+    width: 0;
+    height: 2px;
+    background: #fff;
+    transition: width var(--transition);
+    border-radius: 2px;
+}
+
+.navbar nav a:hover { color: #ffffff; }
+.navbar nav a:hover::after { width: 100%; }
+
+/* 4) Product Grid Container */
+.product-container {
+    display: grid;
+    grid-template-columns: repeat( auto-fit, minmax(240px, 1fr) );
+    gap: 24px;
+    padding: 40px 20px 60px;
+    max-width: var(--container-max);
+    margin: 0 auto;
+}
+
+/* 5) Product Card */
+.product {
+    background-color: var(--card);
+    border-radius: var(--radius-lg);
+    padding: 18px;
+    text-align: center;
+    box-shadow: var(--shadow-sm);
+    transition: transform var(--transition), box-shadow var(--transition), border-color var(--transition);
+    border: 1px solid rgba(0,0,0,0.05);
+}
+
+.product:hover {
+    transform: translateY(-6px);
+    box-shadow: var(--shadow-lg);
+    border-color: rgba(0,0,0,0.08);
+}
+
+/* Product Image */
+.product img {
+    width: 160px;
+    height: 160px;
+    object-fit: cover;
+    border-radius: var(--radius-md);
+    margin-bottom: 14px;
+    background: #f3f4f6;
+}
+
+/* Product Text */
+.product h3 {
+    color: var(--ink-900);
+    margin-bottom: 8px;
+    font-size: 18px;
+    font-weight: 700;
+}
+
+.description {
+    font-size: 14px;
+    color: var(--ink-500);
+    margin-bottom: 12px;
+    line-height: 1.55;
+    min-height: 42px; /* helps align uneven descriptions */
+}
+
+.price {
+    font-size: 18px;
+    font-weight: 800;
+    color: var(--brand-600);
+    margin-bottom: 16px;
+}
+
+/* 6) Actions (Buttons) */
+.actions {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.actions a {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    padding: 9px 14px;
+    border-radius: 10px;
+    font-size: 14px;
+    text-decoration: none;
+    color: white;
+    font-weight: 700;
+    letter-spacing: 0.2px;
+    transition: transform .2s ease, filter .2s ease, box-shadow .2s ease, background-color .2s ease;
+    box-shadow: 0 2px 0 rgba(0,0,0,0.08);
+}
+
+.actions a:hover { transform: translateY(-1px); filter: saturate(1.05); }
+.actions a:active { transform: translateY(0); box-shadow: none; }
+
+.actions .edit   { background-color: var(--brand-600); }
+.actions .delete { background-color: var(--danger); }
+.actions .details{ background-color: var(--brand-800); }
+
+/* Optional Outline Variant */
+.actions .outline {
+    background: transparent;
+    color: var(--brand-700);
+    border: 1.5px solid var(--brand-500);
+}
+
+/* 7) Utility: Badge (for "On Sale", etc.) */
+.badge {
+    display: inline-block;
+    padding: 4px 10px;
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--brand-800);
+    background: color-mix(in srgb, var(--brand-200) 70%, white);
+}
+
+/* 8) Responsive Tweaks */
+@media (max-width: 768px) {
+    .navbar { padding: 14px 16px; }
+    .navbar h1 { font-size: 20px; }
+    .navbar nav a { margin-left: 14px; font-size: 14px; }
+    .product img { width: 140px; height: 140px; }
+}
+
+/* 9) Reduced Motion Preference */
+@media (prefers-reduced-motion: reduce) {
+    * { transition: none !important; }
+}

@@ -1,0 +1,185 @@
+
+/* ===========================
+   Reset & Base
+=========================== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Inter', Arial, Helvetica, sans-serif;
+}
+
+html, body {
+    height: 100%;
+}
+
+/* ===========================
+   Theme Variables
+=========================== */
+:root {
+    --radius-lg: 12px;
+    --radius-md: 8px;
+    --shadow-md: 0 6px 18px rgba(0,0,0,0.08);
+    --transition: 0.25s ease;
+}
+
+/* Emerald Theme */
+.theme-emerald {
+    --brand-900: #064e3b;
+    --brand-700: #047857;
+    --brand-600: #059669;
+    --brand-500: #10b981;
+    --bg-50: #f8fafc;
+    --card: #ffffff;
+    --ink-900: #1f2937;
+    --ink-500: #6b7280;
+    --border: #e5e7eb;
+}
+
+/* Blue Theme */
+.theme-blue {
+    --brand-900: #1e3a8a;
+    --brand-700: #1d4ed8;
+    --brand-600: #2563eb;
+    --brand-500: #3b82f6;
+    --bg-50: #f8fafc;
+    --card: #ffffff;
+    --ink-900: #1f2937;
+    --ink-500: #6b7280;
+    --border: #e5e7eb;
+}
+
+/* Rose Theme */
+.theme-rose {
+    --brand-900: #9f1239;
+    --brand-700: #be123c;
+    --brand-600: #e11d48;
+    --brand-500: #f43f5e;
+    --bg-50: #fff7f9;
+    --card: #ffffff;
+    --ink-900: #1f1d2b;
+    --ink-500: #6b7280;
+    --border: #f3d6db;
+}
+
+/* Sand Theme */
+.theme-sand {
+    --brand-900: #4e3e34;
+    --brand-700: #6b4f3a;
+    --brand-600: #8b5e3c;
+    --brand-500: #d4a373;
+    --bg-50: #faf7f2;
+    --card: #ffffff;
+    --ink-900: #1c1917;
+    --ink-500: #6b7280;
+    --border: #e5e7eb;
+}
+
+/* ===========================
+   Navbar
+=========================== */
+.navbar {
+    background-color: var(--brand-900);
+    padding: 18px;
+    text-align: center;
+}
+
+.navbar h1 {
+    color: #ffffff;
+    font-size: 22px;
+    font-weight: 600;
+}
+
+/* ===========================
+   Form Container
+=========================== */
+.form-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: calc(100vh - 70px);
+    background-color: var(--bg-50);
+}
+
+/* ===========================
+   Form
+=========================== */
+.product-form {
+    background-color: var(--card);
+    width: 360px;
+    padding: 28px;
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-md);
+}
+
+/* Form Control */
+.form-control {
+    margin-bottom: 20px;
+}
+
+.form-control label {
+    display: block;
+    margin-bottom: 6px;
+    color: var(--ink-900);
+    font-weight: 600;
+    font-size: 14px;
+}
+
+.form-control input,
+.form-control textarea {
+    width: 100%;
+    padding: 10px 12px;
+    border-radius: var(--radius-md);
+    border: 1px solid var(--border);
+    outline: none;
+    font-size: 14px;
+    color: var(--ink-900);
+    transition: border-color var(--transition), box-shadow var(--transition);
+}
+
+.form-control input::placeholder,
+.form-control textarea::placeholder {
+    color: var(--ink-500);
+}
+
+.form-control input:focus,
+.form-control textarea:focus {
+    border-color: var(--brand-600);
+    box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.15);
+}
+
+/* ===========================
+   Button
+=========================== */
+.btn {
+    width: 100%;
+    padding: 12px;
+    background-color: var(--brand-600);
+    color: #ffffff;
+    border: none;
+    border-radius: var(--radius-lg);
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color var(--transition);
+}
+
+.btn:hover {
+    background-color: var(--brand-900);
+}
+
+/* ===========================
+   Image Preview
+=========================== */
+.image-preview {
+    text-align: center;
+    margin-bottom: 18px;
+}
+
+.image-preview img {
+    width: 120px;
+    height: 120px;
+    object-fit: cover;
+    border-radius: var(--radius-md);
+    border: 1px solid var(--border);
+}

@@ -1,46 +1,38 @@
-<!DOCTYPE html>
-<html>
+                    <!DOCTYPE html>
+<html lang="en">
 <head>
-    <title>shop page</title>
-    <style>
-        .product {
-            border: 1px solid #ccc;
-            padding: 10px;
-            margin: 10px;
-            display: inline-block;
-            width: 200px;
-            text-align: center;
-        }
-        
-    </style>
+    <meta charset="UTF-8">
+    <title>store web</title>
+    <link rel="stylesheet" href="/css/main.css">
 </head>
-<body>
-    <div>
+<body class="theme-emerald"><!-- Header -->
+<header class="navbar">
+    <h1>Cooking Recipes</h1>
+    <nav>
+        <a href="/newproduct">New Product</a>
+        <a href="/cart">Cart</a>
+        <a href="/orders">My Orders</a>
+        <a href="/newuser">New User</a>
+    </nav>
+</header>
 
-        <h1   style=" background-color: aquamarine;     height: 80px;"  >Cooking Recipes</h1>
-        
-        <p ><a href="/newproduct">newproduct</a></p>
-        <p ><a href="/newproduct">cart</a></p>
-        <p ><a href="/newproduct">my orders</a></p>
-        <p ><a href="/newuser">new usr</a></p>
+<!-- Products -->
+<section class="product-container">
+    <% for(let i = 0; i < product.length; i++) { %>
+        <div class="product">
+            <img src="<%= product[i].image %>" alt="<%= product[i].name %>">
+            <h3><%= product[i].name %></h3>
+            <p class="description"><%= product[i].description %></p>
+            <p class="price"><%= product[i].price %> EGP</p>
 
-
-
-    </div>
-    <div class="product-container">
-        <% for(let i = 0; i < product.length; i++) { %>
-            <div class="  product  ">
-                <h3><%= product[i].name %></h3>
-                <img src=" <%= product[i].image %> " alt="<%= product[i].image %>"    style="width: 100px; height:100px;">
-                <p><%= product[i].description %></p>
-                <p><%= product[i].price%></p>
-                
-
-                <h5><a href="/editproduct/<%= product[i]._id %>">edit product</a></h5>
-                <h5><a href="/deleteproduct/<%= product[i]._id %>">delete   product </a></h5>
-                <h5><a href="/details/<%= product[i]._id %>">details</a></h5>
+            <div class="actions">
+                <a class="edit" href="/editproduct/<%= product[i]._id %>">Edit</a>
+                <a class="delete" href="/deleteproduct/<%= product[i]._id %>">Delete</a>
+                <a class="details" href="/details/<%= product[i]._id %>">Details</a>
             </div>
-        <% } %>
-    </div>
+        </div>
+    <% } %>
+</section>
+
 </body>
 </html>

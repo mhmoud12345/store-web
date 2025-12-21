@@ -1,21 +1,31 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>details</title>
-   
+    <meta charset="UTF-8">
+    <title>Product Details</title>
+    <link rel="stylesheet" href="/css/productdetails.css">
 </head>
-<body>
+<body  class="theme-emerald">
 
+<header class="navbar">
+    <h1>Product Details</h1>
+</header>
 
-    <main>
-     <div class="product"  >
-                <h1 ><%= product.name %></h1>
-                <img src=" <%= product.image %> " alt="<%= product.image %>" >
+<main class="details-container">
+    <div class="product-card">
 
-                <h3><%= product.description %></h3>
-                <h1><%= product.price%></h1>
-                </div>
-                <button > <a href="/">goshop</a></button>
-    </main>
+        <img src="<%= product.image %>" alt="<%= product.name %>">
+
+        <h2><%= product.name %></h2>
+
+        <p class="description"><%= product.description %></p>
+
+        <p class="price"><%= product.price %> EGP</p>
+
+        <a href="/" class="back-btn">Go to Shop</a>
+
+    </div>
+</main>
+
 </body>
 </html>

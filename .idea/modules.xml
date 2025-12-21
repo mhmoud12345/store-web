@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/cooking-web.iml" filepath="$PROJECT_DIR$/.idea/cooking-web.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/store_wep.iml" filepath="$PROJECT_DIR$/.idea/store_wep.iml" />
     </modules>
   </component>
 </project>
