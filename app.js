@@ -1,4 +1,6 @@
 const http= require('http')
+require("dotenv").config();
+
 const  express=require('express')
 const  mongoose=require('mongoose')
 
@@ -13,7 +15,8 @@ app.set('views','views')
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
-mongoose.connect('mongodb://localhost/cooking-web').then(()=>{console.log('db connected')}).catch((err)=>{console.log(err)})  
+// mongoose.connect('mongodb://localhost/cooking-web').then(()=>{console.log('db connected')}).catch((err)=>{console.log(err)})  
+mongoose.connect(process.env.MONGO_URI).then(() => {console.log('db connected')}).catch((err) => {console.log(err)})
 app.use(express.static(path.join(__dirname,'public')))
 
 
