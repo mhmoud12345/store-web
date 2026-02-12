@@ -13,5 +13,8 @@ router.get('/details/:_id', controllerMain.getdetails)
 router.post('/newproduct',controllerMain.postproduct)
 router.post('/editproduct',controllerMain.posteditproduct)
 router.post('/deleteproduct',controllerMain.postdeleteproduct)
+router.get("/admin/categories", controllerMain.getAddCategory);
+router.post("/admin/categories", controllerMain.postAddCategory);
+
 
 module.exports = router

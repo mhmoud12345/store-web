@@ -1,5 +1,6 @@
 const path = require("path");
 const products = require("../model/products");
+const Category=require("../model/productscategory")
 
 async function getAllpruducts(req, res) {
   const data = await products.feichAllproducts();
@@ -9,16 +10,17 @@ async function getAllpruducts(req, res) {
 }
 
 function addproduct(req, res) {
-  res.render("newproduct");
+  Category.feichAllcategory().then((cat) => {
+    res.render("newproduct",{cat:cat});
+  });
 }
 
 function postproduct(req, res) {
-  // read fields from req.body (requires express.urlencoded middleware)
   console.log("body:", req.body);
-  const { name, price, imageUrl, description } = req.body;
+  const { name, price, imageUrl, description,category } = req.body;
 
   products
-    .postproduct(name, price, imageUrl, description)
+    .postproduct(name, price, imageUrl, description,category)
     .then(() => res.redirect("/"))
     .catch((err) => {
       console.log(err);
@@ -28,9 +30,10 @@ function postproduct(req, res) {
 
 async function geteditproduct(req, res) {
   const productid = req.params._id;
+  const cat = await Category.feichAllcategory();
   try {
     const product = await products.findproduct(productid);
-    res.render("neweditedproduct", { product: product });
+    res.render("neweditedproduct", { product: product, cat: cat });
   } catch (err) {
     console.log(err);
     res.status(500).send("Error fetching product");
@@ -39,9 +42,9 @@ async function geteditproduct(req, res) {
 
 async function posteditproduct(req, res) {
   console.log("body:", req.body);
-  const { name, price, imageUrl, description, _id } = req.body;
+  const { name, price, imageUrl, description, _id, category } = req.body;
 
-  await products.updateproduct(name, price, imageUrl, description, _id);
+  await products.updateproduct(name, price, imageUrl, description, _id, category);
 
   res.redirect("/");
 }
@@ -74,6 +77,31 @@ async function getdetails(req, res) {
   res.render("productdetails", { product: product });
 }
 
+async function getAddCategory   (req, res)  {
+  try {
+    const categories = await Category.feichAllcategory();
+
+    res.render("addcategory", { categories:categories });
+  } catch (err) {
+    console.log(err);
+    res.send("Error loading categories");
+  }
+};
+
+
+async function postAddCategory   (req, res)  {
+  try {
+    const { name } = req.body;
+
+    await Category.addcategory(name);
+
+    res.redirect("/admin/categories");
+  } catch (err) {
+    console.log(err);
+    res.send("Error saving category");
+  }
+};
+
 module.exports = {
   getAllpruducts,
   addproduct,
@@ -83,4 +111,6 @@ module.exports = {
   getdeleteproduct,
   postdeleteproduct,
   getdetails,
+  getAddCategory
+  ,postAddCategory
 };

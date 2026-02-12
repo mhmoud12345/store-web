@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Admin Categories</title>
+</head>
+<body>
+
+<h2>Add New Category</h2>
+
+<form action="/admin/categories" method="POST">
+
+  <input
+    type="text"
+    name="name"
+    placeholder="Category name"
+    required
+  >
+
+  <button type="submit">Add</button>
+
+</form>
+
+<hr>
+
+<h2>All Categories</h2>
+
+<ul>
+  <% if (categories.length === 0) { %>
+    <li>No categories yet</li>
+  <% } %>
+
+  <% categories.forEach(cat => { %>
+    <li><%= cat.name %></li>
+  <% }) %>
+</ul>
+<hr>
+<a href="/" class="back-btn">Go to Shop</a>
+</body>
+</html>

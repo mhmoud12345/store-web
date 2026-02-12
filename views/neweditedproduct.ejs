@@ -32,11 +32,26 @@
             <label for="price">Price (EGP)</label>
             <input type="number" name="price" id="price" step="0.01" value="<%= product.price %>" required>
         </div>
-
+<div class="form-control">
+            <label>Category</label>
+            <div class="radio-group">
+                <% cat.forEach(c => { %>
+                    <label class="radio-label">
+                        <input type="radio" name="category" value="<%= c.name %>" required <%= c.name === product.category ? 'checked' : '' %> >
+                        <span class="radio-custom"></span>
+                        <span class="radio-text"><%= c.name %></span>
+                    </label>
+                <% }) %>
+            </div>
+        </div>
 
         <div class="form-control">
             <label for="description">Description</label>
             <textarea name="description" id="description" rows="5" required><%= product.description %></textarea>
+        </div>
+    
+
+            
         </div>
 
         <input type="hidden" name="_id" value="<%= product._id %>">

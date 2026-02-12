@@ -1,283 +1,298 @@
-
-/* =========================================================
-   Store Web — Professional CSS
-   Author: You
-   Notes:
-   - Themeable via <body class="theme-emerald|theme-blue|theme-rose|theme-sand">
-   - Designed for your HTML/EJS template
-   ========================================================= */
-
-/* 1) Design Tokens (Theme Variables) */
-:root {
-    --radius-lg: 16px;
-    --radius-md: 12px;
-    --radius-sm: 8px;
-
-    --shadow-sm: 0 4px 12px rgba(0, 0, 0, 0.08);
-    --shadow-md: 0 8px 18px rgba(0, 0, 0, 0.12);
-    --shadow-lg: 0 12px 28px rgba(0, 0, 0, 0.16);
-
-    --transition: 0.28s cubic-bezier(.2,.8,.2,1);
-
-    --font-ui: 'Inter', Arial, Helvetica, sans-serif;
-    --container-max: 1200px;
+/* Reset & Base Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
-/* Default Theme (Emerald – Great for Stores) */
-.theme-emerald {
-    --brand-900: #064e3b;
-    --brand-800: #065f46;
-    --brand-700: #047857;
-    --brand-600: #059669;
-    --brand-500: #10b981; /* Primary */
-    --brand-200: #a7f3d0;
-
-    --ink-900: #0b1220;
-    --ink-700: #1f2937;
-    --ink-500: #4b5563;
-    --ink-300: #9ca3af;
-
-    --bg-50: #f8fafc;
-    --card: #ffffff;
-    --accent: #0ea5e9;
-    --danger: #ef4444;
-}
-
-/* Alt Theme: Blue (Tech / Electronics) */
-.theme-blue {
-    --brand-900: #1e3a8a;
-    --brand-800: #1e40af;
-    --brand-700: #1d4ed8;
-    --brand-600: #2563eb;
-    --brand-500: #3b82f6;
-    --brand-200: #bfdbfe;
-
-    --ink-900: #0b1220;
-    --ink-700: #1f2937;
-    --ink-500: #4b5563;
-    --ink-300: #9ca3af;
-
-    --bg-50: #f8fafc;
-    --card: #ffffff;
-    --accent: #14b8a6;
-    --danger: #dc2626;
-}
-
-/* Alt Theme: Rose (Beauty / Boutique) */
-.theme-rose {
-    --brand-900: #7f1d1d;
-    --brand-800: #9f1239;
-    --brand-700: #be123c;
-    --brand-600: #e11d48;
-    --brand-500: #f43f5e;
-    --brand-200: #fecdd3;
-
-    --ink-900: #1f1d2b;
-    --ink-700: #333244;
-    --ink-500: #6b7280;
-    --ink-300: #a1a1aa;
-
-    --bg-50: #fff7f9;
-    --card: #ffffff;
-    --accent: #f59e0b;
-    --danger: #dc2626;
-}
-
-/* Alt Theme: Sand (Home / Lifestyle) */
-.theme-sand {
-    --brand-900: #3a2f27;
-    --brand-800: #4e3e34;
-    --brand-700: #6b4f3a;
-    --brand-600: #8b5e3c;
-    --brand-500: #d4a373;
-    --brand-200: #f1e0c6;
-
-    --ink-900: #1c1917;
-    --ink-700: #374151;
-    --ink-500: #6b7280;
-    --ink-300: #a8a29e;
-
-    --bg-50: #faf7f2;
-    --card: #ffffff;
-    --accent: #0ea5e9;
-    --danger: #b91c1c;
-}
-
-/* 2) Base / Reset */
-* { margin: 0; padding: 0; box-sizing: border-box; }
-html, body { height: 100%; }
 body {
-    font-family: var(--font-ui);
-    background-color: var(--bg-50);
-    color: var(--ink-700);
-    line-height: 1.5;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
+    font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    background: linear-gradient(135deg, #f0f9ff 0%, #e0e7ff 50%, #fce7f3 100%);
+    min-height: 100vh;
+    color: #1a1a1a;
+    line-height: 1.6;
 }
 
-/* 3) Navbar */
+/* Theme Colors */
+.theme-emerald {
+    --primary: #10b981;
+    --primary-dark: #059669;
+    --secondary: #6366f1;
+    --accent: #f59e0b;
+    --danger: #ef4444;
+    --text-light: #64748b;
+}
+
+/* Header/Navbar */
 .navbar {
-    background: linear-gradient(90deg, var(--brand-900), var(--brand-600));
-    padding: 16px 24px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    box-shadow: var(--shadow-sm);
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(20px);
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    padding: 1.5rem 3rem;
     position: sticky;
     top: 0;
-    z-index: 50;
+    z-index: 1000;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.3);
 }
 
 .navbar h1 {
-    color: #fff;
-    font-size: 24px;
-    font-weight: 800;
-    letter-spacing: 0.2px;
+    font-size: 2rem;
+    font-weight: 700;
+    background: linear-gradient(135deg, var(--primary), var(--secondary));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 1rem;
+    letter-spacing: -0.5px;
 }
 
-.navbar nav a {
-    color: #eaf2ff;
-    margin-left: 20px;
+.navbar nav {
+    display: flex;
+    gap: 2rem;
+    flex-wrap: wrap;
+}
+
+.navbar a {
+    color: #374151;
     text-decoration: none;
     font-weight: 600;
-    font-size: 15px;
+    font-size: 0.95rem;
+    padding: 0.6rem 1.2rem;
+    border-radius: 10px;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     position: relative;
-    transition: color var(--transition);
+    overflow: hidden;
 }
 
-.navbar nav a::after {
-    content: "";
+.navbar a::before {
+    content: '';
     position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, var(--primary), var(--secondary));
+    transition: left 0.3s ease;
+    z-index: -1;
+}
+
+.navbar a:hover::before {
     left: 0;
-    bottom: -6px;
-    width: 0;
-    height: 2px;
-    background: #fff;
-    transition: width var(--transition);
-    border-radius: 2px;
 }
 
-.navbar nav a:hover { color: #ffffff; }
-.navbar nav a:hover::after { width: 100%; }
+.navbar a:hover {
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(16, 185, 129, 0.3);
+}
 
-/* 4) Product Grid Container */
+/* Product Container */
 .product-container {
+    max-width: 1200px;
+    margin: 3rem auto;
+    padding: 2rem 2rem;
     display: grid;
-    grid-template-columns: repeat( auto-fit, minmax(240px, 1fr) );
-    gap: 24px;
-    padding: 40px 20px 60px;
-    max-width: var(--container-max);
-    margin: 0 auto;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1.8rem;
 }
 
-/* 5) Product Card */
+/* Product Cards */
 .product {
-    background-color: var(--card);
-    border-radius: var(--radius-lg);
-    padding: 18px;
-    text-align: center;
-    box-shadow: var(--shadow-sm);
-    transition: transform var(--transition), box-shadow var(--transition), border-color var(--transition);
-    border: 1px solid rgba(0,0,0,0.05);
+    background: white;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    transition: all 0.3s ease;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    border: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.product::before {
+    display: none;
 }
 
 .product:hover {
-    transform: translateY(-6px);
-    box-shadow: var(--shadow-lg);
-    border-color: rgba(0,0,0,0.08);
+    transform: translateY(-8px);
+    box-shadow: 0 12px 35px rgba(0, 0, 0, 0.15);
+    border-color: var(--primary);
 }
 
 /* Product Image */
 .product img {
-    width: 160px;
-    height: 160px;
-    object-fit: cover;
-    border-radius: var(--radius-md);
-    margin-bottom: 14px;
-    background: #f3f4f6;
+    width: 100%;
+    height: 240px;
+    object-fit: contain;
+    object-position: center;
+    transition: transform 0.4s ease;
+    position: relative;
+    z-index: 1;
+    display: block;
+    background: #f8f9fa;
 }
 
-/* Product Text */
+.product:hover img {
+    transform: scale(1.05);
+}
+
+/* Product Content */
 .product h3 {
-    color: var(--ink-900);
-    margin-bottom: 8px;
-    font-size: 18px;
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: #1f2937;
+    margin: 1.2rem 1.2rem 0.5rem;
+    letter-spacing: -0.3px;
+    position: relative;
+    z-index: 1;
+}
+
+.product .description {
+    color: var(--text-light);
+    font-size: 0.88rem;
+    line-height: 1.6;
+    margin: 0 1.2rem 1rem;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    position: relative;
+    z-index: 1;
+}
+
+.product .price {
+    font-size: 1.6rem;
     font-weight: 700;
+    color: var(--primary);
+    margin: 0 1.2rem 1.2rem;
+    position: relative;
+    z-index: 1;
 }
 
-.description {
-    font-size: 14px;
-    color: var(--ink-500);
-    margin-bottom: 12px;
-    line-height: 1.55;
-    min-height: 42px; /* helps align uneven descriptions */
-}
-
-.price {
-    font-size: 18px;
-    font-weight: 800;
-    color: var(--brand-600);
-    margin-bottom: 16px;
-}
-
-/* 6) Actions (Buttons) */
+/* Action Buttons */
 .actions {
     display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
-    gap: 8px;
+    gap: 0.5rem;
+    padding: 0 1.2rem 1.2rem;
+    position: relative;
+    z-index: 1;
 }
 
 .actions a {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 6px;
-    padding: 9px 14px;
-    border-radius: 10px;
-    font-size: 14px;
+    flex: 1;
+    padding: 0.7rem 0.8rem;
     text-decoration: none;
+    border-radius: 8px;
+    text-align: center;
+    font-weight: 600;
+    font-size: 0.82rem;
+    transition: all 0.3s ease;
+    border: 2px solid transparent;
+}
+
+.actions .edit {
+    background: white;
+    color: #f59e0b;
+    border-color: #f59e0b;
+}
+
+.actions .edit:hover {
+    background: #f59e0b;
     color: white;
-    font-weight: 700;
-    letter-spacing: 0.2px;
-    transition: transform .2s ease, filter .2s ease, box-shadow .2s ease, background-color .2s ease;
-    box-shadow: 0 2px 0 rgba(0,0,0,0.08);
+    transform: translateY(-2px);
 }
 
-.actions a:hover { transform: translateY(-1px); filter: saturate(1.05); }
-.actions a:active { transform: translateY(0); box-shadow: none; }
-
-.actions .edit   { background-color: var(--brand-600); }
-.actions .delete { background-color: var(--danger); }
-.actions .details{ background-color: var(--brand-800); }
-
-/* Optional Outline Variant */
-.actions .outline {
-    background: transparent;
-    color: var(--brand-700);
-    border: 1.5px solid var(--brand-500);
+.actions .delete {
+    background: white;
+    color: #ef4444;
+    border-color: #ef4444;
 }
 
-/* 7) Utility: Badge (for "On Sale", etc.) */
-.badge {
-    display: inline-block;
-    padding: 4px 10px;
-    border-radius: 999px;
-    font-size: 12px;
-    font-weight: 700;
-    color: var(--brand-800);
-    background: color-mix(in srgb, var(--brand-200) 70%, white);
+.actions .delete:hover {
+    background: #ef4444;
+    color: white;
+    transform: translateY(-2px);
 }
 
-/* 8) Responsive Tweaks */
+.actions .details {
+    background: var(--primary);
+    color: white;
+    border-color: var(--primary);
+}
+
+.actions .details:hover {
+    background: var(--primary-dark);
+    transform: translateY(-2px);
+}
+
+/* Responsive Design */
+@media (max-width: 1200px) {
+    .product-container {
+        grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+        gap: 1.5rem;
+        padding: 2rem 1.5rem;
+    }
+}
+
 @media (max-width: 768px) {
-    .navbar { padding: 14px 16px; }
-    .navbar h1 { font-size: 20px; }
-    .navbar nav a { margin-left: 14px; font-size: 14px; }
-    .product img { width: 140px; height: 140px; }
+    .navbar {
+        padding: 1.5rem 1.5rem;
+    }
+
+    .navbar h1 {
+        font-size: 1.5rem;
+        margin-bottom: 1rem;
+    }
+
+    .navbar nav {
+        gap: 0.75rem;
+    }
+
+    .navbar a {
+        font-size: 0.85rem;
+        padding: 0.5rem 1rem;
+    }
+
+    .product-container {
+        grid-template-columns: 1fr;
+        padding: 1.5rem;
+        gap: 1.5rem;
+        margin: 2rem auto;
+    }
+
+    .product img {
+        height: 250px;
+    }
+
+    .product h3 {
+        font-size: 1.4rem;
+    }
+
+    .product .price {
+        font-size: 1.6rem;
+    }
+
+    .actions {
+        flex-direction: column;
+    }
+
+    .actions a {
+        width: 100%;
+    }
 }
 
-/* 9) Reduced Motion Preference */
-@media (prefers-reduced-motion: reduce) {
-    * { transition: none !important; }
+@media (max-width: 480px) {
+    .navbar {
+        padding: 1rem;
+    }
+
+    .navbar nav {
+        width: 100%;
+        justify-content: space-between;
+    }
+
+    .product-container {
+        padding: 1rem;
+        margin: 1rem auto;
+    }
 }

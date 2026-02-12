@@ -18,20 +18,27 @@ const productSchema = new mongoose.Schema({
     type: Number,
     required: true,
   },
+  category:{
+    type:String,
+    required:false,
+  }
 });
 
 const ProductModel = mongoose.model("Product", productSchema);
 
 function feichAllproducts() {
+
   return ProductModel.find();
+
 }
 
-function postproduct(Name, Price, Image, Description) {
+function postproduct(Name, Price, Image, Description,category) {
   // console.log(Name,Price,Description,Image)
   const product = new ProductModel({
     name: Name,
     image: Image,
     description: Description,
+    category:category,
     price: Price,
   });
 
@@ -46,6 +53,7 @@ function postproduct(Name, Price, Image, Description) {
     });
 }
 
+
 function findproduct(_id) {
   return ProductModel.findById(_id)
     .then((pro) => {
@@ -57,12 +65,13 @@ function findproduct(_id) {
       throw err;
     });
 }
-function updateproduct(name, price, imageUrl, description, _id) {
+function updateproduct(name, price, imageUrl, description, _id, category) {
   ProductModel.findByIdAndUpdate(
     { _id: _id },
     {
       name: name,
       price: price,
+      category:category,
       image: imageUrl,
       description: description,
     }

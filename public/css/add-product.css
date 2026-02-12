@@ -1,185 +1,269 @@
-
-/* ===========================
-   Reset & Base
-=========================== */
+/* Reset & Base Styles */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: 'Inter', Arial, Helvetica, sans-serif;
 }
 
-html, body {
-    height: 100%;
+body {
+    font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    background: linear-gradient(135deg, #f0f9ff 0%, #e0e7ff 50%, #fce7f3 100%);
+    min-height: 100vh;
+    color: #1a1a1a;
+    line-height: 1.6;
 }
 
-/* ===========================
-   Theme Variables
-=========================== */
-:root {
-    --radius-lg: 12px;
-    --radius-md: 8px;
-    --shadow-md: 0 6px 18px rgba(0,0,0,0.08);
-    --transition: 0.25s ease;
-}
-
-/* Emerald Theme */
+/* Theme Colors */
 .theme-emerald {
-    --brand-900: #064e3b;
-    --brand-700: #047857;
-    --brand-600: #059669;
-    --brand-500: #10b981;
-    --bg-50: #f8fafc;
-    --card: #ffffff;
-    --ink-900: #1f2937;
-    --ink-500: #6b7280;
-    --border: #e5e7eb;
+    --primary: #10b981;
+    --primary-dark: #059669;
+    --secondary: #6366f1;
+    --accent: #f59e0b;
+    --danger: #ef4444;
+    --text-light: #64748b;
 }
 
-/* Blue Theme */
-.theme-blue {
-    --brand-900: #1e3a8a;
-    --brand-700: #1d4ed8;
-    --brand-600: #2563eb;
-    --brand-500: #3b82f6;
-    --bg-50: #f8fafc;
-    --card: #ffffff;
-    --ink-900: #1f2937;
-    --ink-500: #6b7280;
-    --border: #e5e7eb;
-}
-
-/* Rose Theme */
-.theme-rose {
-    --brand-900: #9f1239;
-    --brand-700: #be123c;
-    --brand-600: #e11d48;
-    --brand-500: #f43f5e;
-    --bg-50: #fff7f9;
-    --card: #ffffff;
-    --ink-900: #1f1d2b;
-    --ink-500: #6b7280;
-    --border: #f3d6db;
-}
-
-/* Sand Theme */
-.theme-sand {
-    --brand-900: #4e3e34;
-    --brand-700: #6b4f3a;
-    --brand-600: #8b5e3c;
-    --brand-500: #d4a373;
-    --bg-50: #faf7f2;
-    --card: #ffffff;
-    --ink-900: #1c1917;
-    --ink-500: #6b7280;
-    --border: #e5e7eb;
-}
-
-/* ===========================
-   Navbar
-=========================== */
+/* Header/Navbar */
 .navbar {
-    background-color: var(--brand-900);
-    padding: 18px;
-    text-align: center;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(20px);
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    padding: 1.5rem 3rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.3);
 }
 
 .navbar h1 {
-    color: #ffffff;
-    font-size: 22px;
-    font-weight: 600;
+    font-size: 2rem;
+    font-weight: 700;
+    background: linear-gradient(135deg, var(--primary), var(--secondary));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    letter-spacing: -0.5px;
+    text-align: center;
 }
 
-/* ===========================
-   Form Container
-=========================== */
+/* Form Container */
 .form-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: calc(100vh - 70px);
-    background-color: var(--bg-50);
+    max-width: 700px;
+    margin: 3rem auto;
+    padding: 0 2rem;
 }
 
-/* ===========================
-   Form
-=========================== */
+/* Product Form */
 .product-form {
-    background-color: var(--card);
-    width: 360px;
-    padding: 28px;
-    border-radius: var(--radius-lg);
-    box-shadow: var(--shadow-md);
+    background: white;
+    border-radius: 16px;
+    padding: 2.5rem;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    border: 1px solid rgba(0, 0, 0, 0.05);
 }
 
 /* Form Control */
 .form-control {
-    margin-bottom: 20px;
+    margin-bottom: 1.8rem;
 }
 
 .form-control label {
     display: block;
-    margin-bottom: 6px;
-    color: var(--ink-900);
     font-weight: 600;
-    font-size: 14px;
+    color: #1f2937;
+    margin-bottom: 0.6rem;
+    font-size: 0.95rem;
 }
 
 .form-control input,
 .form-control textarea {
     width: 100%;
-    padding: 10px 12px;
-    border-radius: var(--radius-md);
-    border: 1px solid var(--border);
-    outline: none;
-    font-size: 14px;
-    color: var(--ink-900);
-    transition: border-color var(--transition), box-shadow var(--transition);
-}
-
-.form-control input::placeholder,
-.form-control textarea::placeholder {
-    color: var(--ink-500);
+    padding: 0.9rem 1rem;
+    border: 2px solid #e5e7eb;
+    border-radius: 10px;
+    font-size: 0.95rem;
+    font-family: inherit;
+    transition: all 0.3s ease;
+    background: #f9fafb;
 }
 
 .form-control input:focus,
 .form-control textarea:focus {
-    border-color: var(--brand-600);
-    box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.15);
+    outline: none;
+    border-color: var(--primary);
+    background: white;
+    box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.1);
 }
 
-/* ===========================
-   Button
-=========================== */
-.btn {
-    width: 100%;
-    padding: 12px;
-    background-color: var(--brand-600);
-    color: #ffffff;
-    border: none;
-    border-radius: var(--radius-lg);
-    font-size: 15px;
-    font-weight: 600;
+.form-control textarea {
+    resize: vertical;
+    min-height: 120px;
+    line-height: 1.6;
+}
+
+/* Radio Group - NEW STYLES */
+.radio-group {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 0.75rem;
+    margin-top: 0.5rem;
+}
+
+.radio-label {
+    position: relative;
+    display: flex;
+    align-items: center;
+    padding: 0.875rem 1rem;
+    background: #f9fafb;
+    border: 2px solid #e5e7eb;
+    border-radius: 10px;
     cursor: pointer;
-    transition: background-color var(--transition);
+    transition: all 0.3s ease;
+    user-select: none;
 }
 
-.btn:hover {
-    background-color: var(--brand-900);
+.radio-label:hover {
+    background: #f3f4f6;
+    border-color: #d1d5db;
 }
 
-/* ===========================
-   Image Preview
-=========================== */
+.radio-label input[type="radio"] {
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.radio-custom {
+    position: relative;
+    width: 20px;
+    height: 20px;
+    border: 2px solid #d1d5db;
+    border-radius: 50%;
+    margin-right: 0.75rem;
+    flex-shrink: 0;
+    transition: all 0.3s ease;
+    background: white;
+}
+
+.radio-custom::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0);
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: white;
+    transition: transform 0.2s ease;
+}
+
+.radio-label input[type="radio"]:checked ~ .radio-custom {
+    background: var(--primary);
+    border-color: var(--primary);
+}
+
+.radio-label input[type="radio"]:checked ~ .radio-custom::after {
+    transform: translate(-50%, -50%) scale(1);
+}
+
+.radio-label input[type="radio"]:checked ~ .radio-text {
+    color: var(--primary);
+    font-weight: 600;
+}
+
+.radio-label input[type="radio"]:focus ~ .radio-custom {
+    box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.1);
+}
+
+.radio-text {
+    font-size: 0.95rem;
+    color: #374151;
+    transition: all 0.3s ease;
+}
+
+/* Image Preview */
 .image-preview {
-    text-align: center;
-    margin-bottom: 18px;
+    margin: 1.5rem 0 2rem;
+    border-radius: 12px;
+    overflow: hidden;
+    background: #f8f9fa;
+    border: 2px solid #e5e7eb;
 }
 
 .image-preview img {
-    width: 120px;
-    height: 120px;
-    object-fit: cover;
-    border-radius: var(--radius-md);
-    border: 1px solid var(--border);
+    width: 100%;
+    height: 300px;
+    object-fit: contain;
+    object-position: center;
+    display: block;
+}
+
+/* Submit Button */
+.btn {
+    width: 100%;
+    padding: 1rem;
+    background: var(--primary);
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-top: 1rem;
+}
+
+.btn:hover {
+    background: var(--primary-dark);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(16, 185, 129, 0.3);
+}
+
+.btn:active {
+    transform: translateY(0);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .navbar {
+        padding: 1.5rem 1.5rem;
+    }
+
+    .navbar h1 {
+        font-size: 1.5rem;
+    }
+
+    .form-container {
+        margin: 2rem auto;
+        padding: 0 1rem;
+    }
+
+    .product-form {
+        padding: 1.5rem;
+    }
+
+    .radio-group {
+        grid-template-columns: 1fr;
+    }
+
+    .image-preview img {
+        height: 200px;
+    }
+}
+
+@media (max-width: 480px) {
+    .navbar {
+        padding: 1rem;
+    }
+
+    .form-container {
+        margin: 1.5rem auto;
+    }
+
+    .product-form {
+        padding: 1.2rem;
+    }
+
+    .radio-label {
+        padding: 0.75rem;
+    }
 }

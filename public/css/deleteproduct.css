@@ -1,219 +1,212 @@
-
-/* ===========================
-   Delete Product Page — CSS
-   =========================== */
-
-/* -------- Reset & Base -------- */
+/* Reset & Base Styles */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
-html, body { height: 100%; }
-
 body {
-    font-family: 'Inter', Arial, Helvetica, sans-serif;
-    background: #f5f7fb;
-    color: #1f2937;
-    line-height: 1.5;
+    font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    background: linear-gradient(135deg, #fef2f2 0%, #fee2e2 50%, #fecaca 100%);
+    min-height: 100vh;
+    color: #1a1a1a;
+    line-height: 1.6;
 }
 
-/* -------- Theme Tokens (Blue by default) -------- */
-:root {
-    --brand-900: #0d47a1;
-    --brand-800: #1565c0;
-    --brand-700: #1976d2;
-    --brand-600: #1e88e5;
-
-    --danger-600: #e11d48;
-    --danger-700: #be123c;
-
-    --ink-900: #0b1220;
-    --ink-700: #1f2937;
-    --ink-500: #6b7280;
-
-    --bg-50: #f5f7fb;
-    --card: #ffffff;
-
-    --radius-lg: 16px;
-    --radius-md: 12px;
-    --radius-sm: 8px;
-
-    --shadow-sm: 0 4px 12px rgba(0,0,0,0.08);
-    --shadow-md: 0 8px 20px rgba(0,0,0,0.12);
-
-    --transition: 0.25s cubic-bezier(.2,.8,.2,1);
-}
-
-/* -------- Navbar -------- */
+/* Header/Navbar */
 .navbar {
-    background: linear-gradient(90deg, var(--brand-900), var(--brand-700));
-    padding: 18px 22px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    box-shadow: var(--shadow-sm);
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(20px);
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    padding: 1.5rem 3rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.3);
 }
 
 .navbar h1 {
-    color: #fff;
-    font-size: 22px;
-    font-weight: 800;
-    letter-spacing: .2px;
+    font-size: 2rem;
+    font-weight: 700;
+    background: linear-gradient(135deg, #ef4444, #dc2626);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    letter-spacing: -0.5px;
+    margin-bottom: 1rem;
 }
 
-.navbar nav a {
-    color: #eaf2ff;
+.navbar nav {
+    display: flex;
+    gap: 2rem;
+    flex-wrap: wrap;
+}
+
+.navbar a {
+    color: #374151;
     text-decoration: none;
-    margin-left: 18px;
     font-weight: 600;
-    font-size: 14px;
-    position: relative;
-    transition: color var(--transition);
+    font-size: 0.95rem;
+    padding: 0.6rem 1.2rem;
+    border-radius: 10px;
+    transition: all 0.3s ease;
 }
 
-.navbar nav a::after {
-    content: "";
-    position: absolute;
-    left: 0;
-    bottom: -6px;
-    width: 0;
-    height: 2px;
-    background: #fff;
-    border-radius: 2px;
-    transition: width var(--transition);
+.navbar a:hover {
+    background: #ef4444;
+    color: white;
+    transform: translateY(-2px);
 }
 
-.navbar nav a:hover { color: #ffffff; }
-.navbar nav a:hover::after { width: 100%; }
-
-/* -------- Main / Form Container -------- */
+/* Form Container */
 .form-container {
-    min-height: calc(100vh - 70px);
-    display: grid;
-    place-items: center;
-    padding: 32px 16px;
-    background: var(--bg-50);
+    max-width: 700px;
+    margin: 3rem auto;
+    padding: 0 2rem;
 }
 
-/* -------- Form -------- */
+/* Product Form */
 .product-form {
-    width: 100%;
-    max-width: 560px;
-    background: var(--card);
-    border-radius: var(--radius-lg);
-    box-shadow: var(--shadow-md);
-    padding: 28px;
-    border: 1px solid rgba(0,0,0,0.05);
+    background: white;
+    border-radius: 16px;
+    padding: 2.5rem;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    border: 1px solid rgba(239, 68, 68, 0.2);
 }
 
-.product-form h2 {
+.delete-form h2 {
+    color: #dc2626;
+    font-size: 1.5rem;
     text-align: center;
-    font-size: 20px;
-    font-weight: 800;
-    color: var(--ink-900);
-    margin-bottom: 20px;
+    margin-bottom: 2rem;
+    font-weight: 600;
 }
 
-/* -------- Product Card Preview -------- */
+/* Product Card Preview */
 .product-card {
-    background: #fff;
-    border: 1px solid rgba(0,0,0,0.06);
-    border-radius: var(--radius-md);
-    padding: 18px;
+    background: #f9fafb;
+    border-radius: 12px;
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+    border: 2px solid #e5e7eb;
     text-align: center;
-    box-shadow: var(--shadow-sm);
-    margin-bottom: 20px;
 }
 
 .product-card img {
-    width: 130px;
-    height: 130px;
-    object-fit: cover;
-    border-radius: 12px;
-    border: 2px solid var(--brand-700);
-    margin-bottom: 12px;
+    width: 100%;
+    height: 280px;
+    object-fit: contain;
+    object-position: center;
+    display: block;
+    border-radius: 8px;
+    margin-bottom: 1.2rem;
+    background: white;
 }
 
 .product-card h3 {
-    font-size: 18px;
-    font-weight: 700;
-    color: var(--ink-900);
-    margin-bottom: 6px;
+    font-size: 1.4rem;
+    font-weight: 600;
+    color: #1f2937;
+    margin-bottom: 0.8rem;
 }
 
 .product-card .description {
-    font-size: 14px;
-    color: var(--ink-500);
-    margin-bottom: 8px;
+    color: #64748b;
+    font-size: 0.95rem;
+    line-height: 1.6;
+    margin-bottom: 1rem;
 }
 
 .product-card .price {
-    font-size: 16px;
-    font-weight: 800;
-    color: var(--brand-800);
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: #ef4444;
 }
 
-/* -------- Actions (Buttons) -------- */
-.actions {
-    display: flex;
-    gap: 12px;
-    justify-content: center;
-    margin-top: 8px;
-}
-
+/* Buttons */
 .btn {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-
-    padding: 12px 16px;
-    border-radius: 12px;
+    width: 100%;
+    padding: 1rem;
     border: none;
-    text-decoration: none;
-    font-weight: 800;
-    font-size: 14px;
-    cursor: pointer;
-
-    transition: transform .15s ease, filter .15s ease, background-color var(--transition);
-    box-shadow: 0 2px 0 rgba(0,0,0,.08);
-}
-
-.btn:hover { transform: translateY(-1px); filter: saturate(1.05); }
-.btn:active { transform: translateY(0); box-shadow: none; }
-
-/* Primary destructive */
-.delete-btn {
-    background: var(--danger-600);
-    color: #fff;
-}
-.delete-btn:hover { background: var(--danger-700); }
-
-/* Secondary / Cancel (link styled as button) */
-.cancel-btn {
-    background: var(--brand-700);
-    color: #fff;
-}
-.cancel-btn:hover { background: var(--brand-900); }
-
-/* Full-width buttons on small screens */
-@media (max-width: 520px) {
-    .actions { flex-direction: column; }
-    .btn { width: 100%; }
-}
-
-/* -------- Accessibility Focus States -------- */
-a:focus-visible,
-button:focus-visible {
-    outline: 3px solid color-mix(in srgb, var(--brand-700) 65%, white);
-    outline-offset: 2px;
     border-radius: 10px;
-    transition: outline-color .1s ease;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    display: block;
+    text-align: center;
+    margin-bottom: 0.75rem;
 }
 
-/* -------- Reduced Motion -------- */
-@media (prefers-reduced-motion: reduce) {
-    * { transition: none !important; }
+.delete-btn {
+    background: #ef4444;
+    color: white;
+}
+
+.delete-btn:hover {
+    background: #dc2626;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(239, 68, 68, 0.3);
+}
+
+.cancel-btn {
+    background: white;
+    color: #374151;
+    border: 2px solid #e5e7eb;
+}
+
+.cancel-btn:hover {
+    background: #f9fafb;
+    border-color: #d1d5db;
+    transform: translateY(-2px);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .navbar {
+        padding: 1.5rem 1.5rem;
+    }
+
+    .navbar h1 {
+        font-size: 1.5rem;
+        margin-bottom: 1rem;
+    }
+
+    .navbar nav {
+        gap: 0.75rem;
+    }
+
+    .navbar a {
+        font-size: 0.85rem;
+        padding: 0.5rem 1rem;
+    }
+
+    .form-container {
+        margin: 2rem auto;
+        padding: 0 1rem;
+    }
+
+    .product-form {
+        padding: 1.5rem;
+    }
+
+    .delete-form h2 {
+        font-size: 1.2rem;
+    }
+
+    .product-card img {
+        height: 200px;
+    }
+}
+
+@media (max-width: 480px) {
+    .navbar {
+        padding: 1rem;
+    }
+
+    .form-container {
+        margin: 1.5rem auto;
+    }
+
+    .product-form {
+        padding: 1.2rem;
+    }
 }
