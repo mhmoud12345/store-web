@@ -24,6 +24,14 @@ app.use(express.static(path.join(__dirname,'public')))
 app.use(mainrouts)
 app.use(cartrouts)
 
+// Global error handling middleware (must be last)
+app.use((err, req, res, next) => {
+  console.error('Error:', err.message);
+  res.status(err.status || 500).json({
+    error: process.env.NODE_ENV === 'production' ? 'Internal Server Error' : err.message
+  });
+});
+
 const PORT = process.env.PORT || 3000;
 
 app.listen(PORT, () => {
