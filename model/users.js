@@ -1,7 +1,11 @@
+const bycrypt = require('bcrypt');
 const mongoose = require('mongoose');
 
 const userSchema = new mongoose.Schema({
     name: { type: String, required: true },
+    password: { type: String, required: true },
+    email: { type: String, required: true, unique: true },
+        role: { type: String, required: true, default: 'user' },
     cart: {
         items: [
             {
@@ -16,25 +20,33 @@ const userSchema = new mongoose.Schema({
     image: { type: String, required: false }
 });
 
-const users = mongoose.model('users', userSchema)
 
 
 
-async function createuser(name,image) {
-    const User = new users({
-        name: name,
-        image:  image
-        
-    });
 
+userSchema.statics.createuser =async function(name,email,password) {
+    return await bycrypt.hash(password, 10).then((hash) => {
+         this.create({
+            name: name,
+            email: email,
+            password: hash,
+        });
+}).then(() => {
     
-        await User.save().then(() => {
+    
+        return User.save().then(() => {
         console.log('user saved!');
         return User;
        } ).catch((err) => {
         console.log(err);
+
         
     })
+    }).catch((err) => {
+        console.log(err);
+    })
+
+
 }
 
-module.exports =  {createuser};
+module.exports = mongoose.model('users', userSchema)

@@ -2,10 +2,25 @@ const http= require('http')
 require("dotenv").config();
 const helmet = require('helmet');
 const  express=require('express')
+const session = require('express-session');
+const mongoSession = require('connect-mongodb-session')(session);
 const  mongoose=require('mongoose')
 const compression = require('compression');
 
 const app=express();
+const mongosession = new mongoSession({
+  uri: process.env.MONGO_URI,
+  collection: 'sessions'
+});
+
+app.use(
+  session({
+    secret: 'my secret',
+    resave: false,
+    saveUninitialized: false,
+    store: mongosession
+  })
+);
 const path = require('path');
 const mainrouts=require('./router/mainrouts');
 const cartrouts=require('./router/cartrouts');
@@ -21,6 +36,12 @@ mongoose.connect(process.env.MONGO_URI).then(() => {console.log('db connected')}
 app.use(express.static(path.join(__dirname,'public')))
 
 
+app.use((req, res, next) => {
+  res.locals.user = req.session.User;
+  res.locals.admine= req.session.Admine;
+  
+  next();
+});
 app.use(mainrouts)
 app.use(cartrouts)
 

@@ -24,22 +24,21 @@ const productSchema = new mongoose.Schema({
   }
 });
 
-const ProductModel = mongoose.model("Product", productSchema);
 
-function feichAllproducts() {
+productSchema.statics.feichAllproducts = function() {
 
-  return ProductModel.find();
+  return this.find();
 
 }
 
-function postproduct(Name, Price, Image, Description,category) {
+ productSchema.methods.postproduct   =async function(Name, Price, Image, Description,category) {
   // console.log(Name,Price,Description,Image)
-  const product = new ProductModel({
+  await this.create({
     name: Name,
     image: Image,
     description: Description,
-    category:category,
-    price: Price,
+    category: category,
+    price: Price
   });
 
   return product
@@ -54,7 +53,7 @@ function postproduct(Name, Price, Image, Description,category) {
 }
 
 
-function findproduct(_id) {
+ productSchema.methods.findproduct=function(_id) {
   return ProductModel.findById(_id)
     .then((pro) => {
       console.log(pro);
@@ -65,7 +64,7 @@ function findproduct(_id) {
       throw err;
     });
 }
-function updateproduct(name, price, imageUrl, description, _id, category) {
+ productSchema.methods.updateproduct=function(name, price, imageUrl, description, _id, category) {
   ProductModel.findByIdAndUpdate(
     { _id: _id },
     {
@@ -80,16 +79,10 @@ function updateproduct(name, price, imageUrl, description, _id, category) {
     .catch((err) => console.log(err));
 }
 
-async function deleteproduct(_id) {
-  await ProductModel.findByIdAndDelete(_id)
+productSchema.methods.deleteproduct=async function(_id) {
+    return await ProductModel.findByIdAndDelete(_id)
     .then((r) => console.log("deleted  well"))
     .catch((err) => console.log("errrrrr", err));
 }
 
-module.exports = {
-  feichAllproducts,
-  postproduct,
-  findproduct,
-  updateproduct,
-  deleteproduct,
-};
+module.exports = mongoose.model("Product", productSchema);

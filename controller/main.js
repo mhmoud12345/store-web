@@ -20,7 +20,13 @@ function postproduct(req, res) {
   const { name, price, imageUrl, description,category } = req.body;
 
   products
-    .postproduct(name, price, imageUrl, description,category)
+    .create({
+      name: name,
+      price: price,
+      image: imageUrl,
+      description: description,
+      category:category
+    })
     .then(() => res.redirect("/"))
     .catch((err) => {
       console.log(err);

@@ -9,12 +9,24 @@
 <header class="navbar">
     <h1>ALSHAPRAWY  STORE</h1>
     <nav>
-        <a href="/newproduct">New Product</a>
-        <a href="/cart">Cart</a>
-        <a href="/orders">My Orders</a>
-        <a href="/newuser">New User</a>
-        <a href="/admin/categories">New category</a>
-    </nav>
+        <% if (admine) { %>
+  <a href="/newproduct">New Product</a>
+  <% } %>
+
+  <a href="<%= user||admine ? '/logout' : '/signin' %>">
+    <%= user||admine ? 'Sign Out' : 'Sign In' %>
+  </a>
+
+  <% if (!user && !admine) { %>
+    <a href="/signup">Signup</a>
+  <% } %>
+
+
+  <% if (admine) { %>
+    <a href="/admin/categories">New category</a>
+<% } %>
+</nav>
+
 </header>
 
 <!-- Products -->
@@ -27,8 +39,14 @@
             <p class="price"><%= product[i].price %> EGP</p>
 
             <div class="actions">
+             <% if (admine) { %>
                 <a class="edit" href="/editproduct/<%= product[i]._id %>">Edit</a>
                 <a class="delete" href="/deleteproduct/<%= product[i]._id %>">Delete</a>
+                <% } %>
+
+                <% if (user) { %>
+                <a class="add-to-cart" href="/add-to-cart/<%= product[i]._id %>">Add to Cart</a>
+                <% } %>
                 <a class="details" href="/details/<%= product[i]._id %>">Details</a>
             </div>
         </div>
