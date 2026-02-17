@@ -38,7 +38,7 @@ async function geteditproduct(req, res) {
   const productid = req.params._id;
   const cat = await Category.feichAllcategory();
   try {
-    const product = await products.findproduct(productid);
+    const product = await products.findOne({_id:productid});
     res.render("neweditedproduct", { product: product, cat: cat });
   } catch (err) {
     console.log(err);
@@ -59,7 +59,7 @@ async function getdeleteproduct(req, res) {
   const _id = req.params._id;
 
   try {
-    const product = await products.findproduct(_id);
+    const product = await products.findOne({_id});
     res.render("deleteproduct", { product: product });
   } catch (err) {
     console.log(err);
@@ -77,7 +77,7 @@ function postdeleteproduct(req, res) {
 async function getdetails(req, res) {
   const _id = req.params._id;
 
-  const product = await products.findproduct(_id);
+  const product = await products.findOne({_id});
 
   console.log(product);
   res.render("productdetails", { product: product });
