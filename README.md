@@ -45,12 +45,10 @@ Currently studying Computer Science and focusing on building real-world web appl
 - 🛒 E-commerce Backend System
 
 ---
-
 ## 📫 Connect With Me
 
-- LinkedIn: (Put your link here)
-- Email: (Put your email here)
-
+- 💼 LinkedIn: <a href="https://www.linkedin.com/in/mhmoud-abdalrhmn-8a485a339" target="_blank">Mahmoud Abdelrahman</a>  
+- 📧 Email: <a href="mailto:mhmoudabdalrhmn1234@gmail.com">mhmoudabdalrhmn1234@gmail.com</a>
 ---
 
 <p align="center">
