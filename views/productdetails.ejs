@@ -1,31 +1,593 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Product Details</title>
-    <link rel="stylesheet" href="/css/productdetails.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title><%= product.name %> – ALSHAPRAWY STORE</title>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/productdetails.css">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --primary: #00c2ff;
+      --primary-glow: rgba(0,194,255,0.2);
+      --accent: #f97316;
+      --accent2: #a855f7;
+      --dark: #080e1a;
+      --dark2: #0d1526;
+      --dark3: #111d33;
+      --card: #0f1a2e;
+      --border: rgba(0,194,255,0.15);
+      --text: #e2eaf5;
+      --muted: #6b82a3;
+      --green: #00e5a0;
+      --red: #ff4757;
+    }
+
+    html { -webkit-tap-highlight-color: transparent; scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Outfit', sans-serif;
+      background: var(--dark);
+      color: var(--text);
+      min-height: 100vh;
+      min-height: 100dvh;
+      display: flex;
+      flex-direction: column;
+      overflow-x: hidden;
+    }
+
+    /* noise */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* ── NAVBAR ── */
+    .navbar {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      background: rgba(8,14,26,0.96);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
+      padding: 0 1.25rem;
+      height: 60px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+    }
+
+    .navbar h1 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.4rem;
+      letter-spacing: 3px;
+      background: linear-gradient(90deg, var(--primary), var(--accent2));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      white-space: nowrap;
+    }
+
+    .navbar-back {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 0.82rem;
+      font-weight: 600;
+      padding: 0.45rem 0.85rem;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      min-height: 44px;
+      white-space: nowrap;
+      transition: all 0.2s;
+      flex-shrink: 0;
+    }
+
+    .navbar-back:hover,
+    .navbar-back:active {
+      color: var(--primary);
+      border-color: var(--primary);
+      background: rgba(0,194,255,0.07);
+    }
+
+    /* ── MAIN ── */
+    main {
+      position: relative;
+      z-index: 1;
+      flex: 1;
+      padding: 1.5rem 1.25rem 6rem; /* bottom padding for sticky CTA */
+      max-width: 900px;
+      margin: 0 auto;
+      width: 100%;
+    }
+
+    /* ambient glow behind image */
+    .img-glow {
+      position: fixed;
+      top: 20%;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 400px;
+      height: 400px;
+      background: radial-gradient(circle, rgba(0,194,255,0.06), transparent 70%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* ── IMAGE SECTION ── */
+    .product-image-wrap {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 2rem 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 260px;
+      position: relative;
+      overflow: hidden;
+      margin-bottom: 1.25rem;
+    }
+
+    .product-image-wrap::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at 50% 50%, rgba(0,194,255,0.06), transparent 70%);
+      pointer-events: none;
+    }
+
+    .product-badge-new {
+      position: absolute;
+      top: 1rem; left: 1rem;
+      background: var(--accent);
+      color: white;
+      font-size: 0.7rem;
+      font-weight: 700;
+      padding: 0.25rem 0.65rem;
+      border-radius: 6px;
+      letter-spacing: 0.08em;
+      z-index: 2;
+    }
+
+    .product-image-wrap img {
+      max-width: 100%;
+      max-height: 240px;
+      object-fit: contain;
+      position: relative;
+      z-index: 1;
+      border-radius: 8px;
+      transition: transform 0.4s ease;
+    }
+
+    /* ── INFO CARD ── */
+    .product-info {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 1.5rem;
+      margin-bottom: 1rem;
+    }
+
+    /* name + rating row */
+    .name-row {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 1rem;
+      margin-bottom: 0.75rem;
+    }
+
+    .product-info h2 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(1.6rem, 5vw, 2.2rem);
+      letter-spacing: 1.5px;
+      line-height: 1.1;
+      flex: 1;
+    }
+
+    .rating-chip {
+      display: flex;
+      align-items: center;
+      gap: 0.3rem;
+      background: rgba(255,193,7,0.1);
+      border: 1px solid rgba(255,193,7,0.2);
+      border-radius: 8px;
+      padding: 0.35rem 0.65rem;
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: #ffc107;
+      flex-shrink: 0;
+      white-space: nowrap;
+    }
+
+    /* price row */
+    .price-row {
+      display: flex;
+      align-items: baseline;
+      gap: 0.75rem;
+      margin-bottom: 1.25rem;
+    }
+
+    .price {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 2rem;
+      letter-spacing: 1px;
+      color: var(--primary);
+    }
+
+    .price-sub {
+      font-size: 0.78rem;
+      color: var(--muted);
+    }
+
+    /* stock badge */
+    .stock-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      background: rgba(0,229,160,0.1);
+      border: 1px solid rgba(0,229,160,0.25);
+      color: var(--green);
+      font-size: 0.75rem;
+      font-weight: 600;
+      padding: 0.3rem 0.7rem;
+      border-radius: 100px;
+      margin-bottom: 1.25rem;
+    }
+
+    .stock-dot {
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: var(--green);
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0%,100% { opacity:1; transform:scale(1); }
+      50%      { opacity:0.4; transform:scale(1.5); }
+    }
+
+    /* divider */
+    .divider {
+      height: 1px;
+      background: rgba(255,255,255,0.05);
+      margin: 1.25rem 0;
+    }
+
+    /* description */
+    .desc-label {
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--muted);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 0.6rem;
+    }
+
+    .description {
+      font-size: 0.92rem;
+      color: var(--muted);
+      line-height: 1.7;
+    }
+
+    /* ── SPECS GRID ── */
+    .specs-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.65rem;
+      margin-bottom: 1rem;
+    }
+
+    .spec-item {
+      background: var(--dark3);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 0.85rem 1rem;
+    }
+
+    .spec-label {
+      font-size: 0.7rem;
+      font-weight: 700;
+      color: var(--muted);
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      margin-bottom: 0.25rem;
+    }
+
+    .spec-value {
+      font-size: 0.88rem;
+      font-weight: 600;
+      color: var(--text);
+    }
+
+    /* ── GUARANTEES ── */
+    .guarantees {
+      display: flex;
+      gap: 0.65rem;
+      flex-wrap: wrap;
+      margin-bottom: 1rem;
+    }
+
+    .guarantee {
+      display: flex;
+      align-items: center;
+      gap: 0.45rem;
+      background: var(--dark3);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 0.55rem 0.85rem;
+      font-size: 0.78rem;
+      color: var(--muted);
+      font-weight: 500;
+      flex: 1;
+      min-width: 120px;
+    }
+
+    /* ── STICKY BOTTOM CTA (mobile) ── */
+    .sticky-cta {
+      position: fixed;
+      bottom: 0; left: 0; right: 0;
+      z-index: 500;
+      background: rgba(8,14,26,0.97);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-top: 1px solid var(--border);
+      padding: 0.9rem 1.25rem;
+      display: flex;
+      gap: 0.65rem;
+      /* safe area for notch phones */
+      padding-bottom: calc(0.9rem + env(safe-area-inset-bottom));
+    }
+
+    .cta-price-col {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .cta-price {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.4rem;
+      letter-spacing: 1px;
+      color: var(--primary);
+      line-height: 1;
+    }
+
+    .cta-price-label {
+      font-size: 0.68rem;
+      color: var(--muted);
+    }
+
+    .cta-btn {
+      flex: 1;
+      min-height: 50px;
+      background: var(--primary);
+      color: var(--dark);
+      border: none;
+      border-radius: 12px;
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1rem;
+      letter-spacing: 2px;
+      cursor: pointer;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.4rem;
+      touch-action: manipulation;
+      transition: all 0.2s;
+      box-shadow: 0 4px 20px var(--primary-glow);
+    }
+
+    .cta-btn:active { transform: scale(0.97); }
+
+    .cta-btn.secondary {
+      background: transparent;
+      color: var(--text);
+      border: 1px solid var(--border);
+      flex: 0 0 50px;
+      font-size: 1.2rem;
+    }
+
+    .cta-btn.secondary:active { border-color: var(--primary); }
+
+    /* ── DESKTOP ── */
+    @media (min-width: 640px) {
+      .navbar { padding: 0 3rem; height: 70px; }
+      .navbar h1 { font-size: 1.8rem; }
+
+      main {
+        padding: 2.5rem 3rem 3rem;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: auto;
+        gap: 1.5rem;
+        align-items: start;
+      }
+
+      .product-image-wrap {
+        grid-column: 1;
+        grid-row: 1 / 3;
+        min-height: 380px;
+        position: sticky;
+        top: 90px;
+      }
+
+      .product-image-wrap img { max-height: 320px; }
+
+      .product-info { grid-column: 2; grid-row: 1; }
+
+      .specs-section { grid-column: 2; grid-row: 2; }
+
+      .guarantees { grid-column: 2; }
+
+      /* hide sticky CTA on desktop, show inline buttons */
+      .sticky-cta { display: none; }
+
+      .desktop-actions {
+        display: flex !important;
+        flex-direction: column;
+        gap: 0.75rem;
+        grid-column: 2;
+      }
+
+      .desktop-btn {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+        min-height: 52px;
+        border-radius: 12px;
+        font-family: 'Bebas Neue', sans-serif;
+        font-size: 1.05rem;
+        letter-spacing: 2px;
+        text-decoration: none;
+        cursor: pointer;
+        border: none;
+        transition: all 0.25s;
+        font-family: 'Bebas Neue', sans-serif;
+      }
+
+      .desktop-btn.primary {
+        background: var(--primary);
+        color: var(--dark);
+        box-shadow: 0 4px 20px var(--primary-glow);
+      }
+
+      .desktop-btn.primary:hover {
+        background: #00aaee;
+        transform: translateY(-2px);
+        box-shadow: 0 8px 28px var(--primary-glow);
+      }
+
+      .desktop-btn.outline {
+        background: transparent;
+        color: var(--text);
+        border: 1px solid var(--border);
+      }
+
+      .desktop-btn.outline:hover {
+        border-color: var(--primary);
+        color: var(--primary);
+        transform: translateY(-2px);
+      }
+    }
+
+    /* desktop-actions hidden on mobile */
+    .desktop-actions { display: none; }
+
+    @media (max-width: 639px) {
+      .specs-section { margin-bottom: 1rem; }
+    }
+  </style>
 </head>
-<body  class="theme-emerald">
+<body>
 
-<header class="navbar">
-    <h1>Product Details</h1>
-</header>
+  <!-- ── NAVBAR ── -->
+  <header class="navbar">
+    <h1>ALSHAPRAWY</h1>
+    <a href="/" class="navbar-back">← Shop</a>
+  </header>
 
-<main class="details-container">
-    <div class="product-card">
+  <!-- ── MAIN ── -->
+  <main class="details-container">
 
-        <img src="<%= product.image %>" alt="<%= product.name %>">
+    <div class="img-glow"></div>
 
-        <h2><%= product.name %></h2>
-
-        <p class="description"><%= product.description %></p>
-
-        <p class="price"><%= product.price %> EGP</p>
-
-        <a href="/" class="back-btn">Go to Shop</a>
-
+    <!-- Product Image -->
+    <div class="product-image-wrap">
+      <span class="product-badge-new"><%= product.condition %></span>
+      <img src="<%= product.image %>" alt="<%= product.name %>">
     </div>
-</main>
+
+    <!-- Product Info -->
+    <div class="product-info">
+      <div class="name-row">
+        <h2><%= product.name %></h2>
+        <div class="rating-chip">⭐ 4.8</div>
+      </div>
+
+      <div class="price-row">
+        <div class="price"><%= product.price %> EGP</div>
+        <div class="price-sub">incl. VAT</div>
+      </div>
+
+      <div class="stock-badge">
+        <div class="stock-dot"></div>
+        In Stock — Ready to Ship
+      </div>
+
+      <div class="divider"></div>
+
+      <div class="desc-label">About this product</div>
+      <p class="description"><%= product.description %></p>
+    </div>
+
+    <!-- Specs -->
+    <div class="specs-section">
+      <div class="specs-grid">
+        <div class="spec-item">
+          <div class="spec-label">Category</div>
+          <div class="spec-value">Computer Accessories</div>
+        </div>
+        <div class="spec-item">
+          <div class="spec-label">Warranty</div>
+          <div class="spec-value">12 Months</div>
+        </div>
+        <div class="spec-item">
+          <div class="spec-label">Delivery</div>
+          <div class="spec-value">2–4 Business Days</div>
+        </div>
+        <div class="spec-item">
+          <div class="spec-label">Condition</div>
+          <div class="spec-value">Brand New</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Guarantees -->
+    <div class="guarantees">
+      <div class="guarantee">🛡️ Original product</div>
+      <div class="guarantee">🔄 Easy returns</div>
+      <div class="guarantee">🚚 Fast delivery</div>
+    </div>
+
+    <!-- Desktop action buttons -->
+    <div class="desktop-actions">
+      <% if (user) { %>
+        <a href="/add-to-cart/<%= product._id %>" class="desktop-btn primary">🛒 Add to Cart</a>
+      <% } else { %>
+        <a href="/signin" class="desktop-btn primary">Sign In to Buy</a>
+      <% } %>
+      <a href="/" class="desktop-btn outline">← Back to Shop</a>
+    </div>
+
+  </main>
+
+  <!-- ── STICKY BOTTOM CTA (mobile only) ── -->
+  <div class="sticky-cta">
+    <div class="cta-price-col">
+      <div class="cta-price"><%= product.price %> EGP</div>
+      <div class="cta-price-label">incl. VAT</div>
+    </div>
+    <% if (user) { %>
+      <a href="/add-to-cart/<%= product._id %>" class="cta-btn">🛒 ADD TO CART</a>
+    <% } else { %>
+      <a href="/signin" class="cta-btn">SIGN IN TO BUY</a>
+    <% } %>
+    <a href="/" class="cta-btn secondary">←</a>
+  </div>
 
 </body>
 </html>

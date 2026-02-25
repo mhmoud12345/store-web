@@ -4,9 +4,44 @@ const Category=require("../model/productscategory")
 
 async function getAllpruducts(req, res) {
   const data = await products.feichAllproducts();
-  // console.log("data from db", data);
+  const cats = await Category.feichAllcategory();
+  res.render("main", { product: data, categories: cats });
+}
 
-  res.render("main", { product: data });
+// render just the new arrivals (flagged isNew)
+async function getNewProducts(req, res) {
+  try {
+    const data = await products.findNew();
+    const cats = await Category.feichAllcategory();
+    res.render("main", { product: data, categories: cats });
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Error loading new products");
+  }
+}
+
+// show all products within a category
+async function getCategoryProducts(req, res) {
+  const category = req.params.category;
+  try {
+    const data = await products.find({ category });
+    const cats = await Category.feichAllcategory();
+    res.render("categoryproduct", { product: data, categories: cats, categoryName: category });
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Error loading category products");
+  }
+}
+
+// simple cart implementation stored in session
+function addToCart(req, res) {
+  const prodId = req.params.id;
+  if (!req.session.cart) {
+    req.session.cart = [];
+  }
+  req.session.cart.push(prodId);
+  // keep the user on the same page
+  res.redirect("back");
 }
 
 function addproduct(req, res) {
@@ -17,15 +52,18 @@ function addproduct(req, res) {
 
 function postproduct(req, res) {
   console.log("body:", req.body);
-  const { name, price, imageUrl, description,category } = req.body;
+  const { name, price, imageUrl, description, category, condition } = req.body;
+  const isNew = condition === 'new';
 
   products
     .create({
-      name: name,
-      price: price,
+      name,
+      price,
       image: imageUrl,
-      description: description,
-      category:category
+      description,
+      category,
+      condition,
+      isNew
     })
     .then(() => res.redirect("/"))
     .catch((err) => {
@@ -48,9 +86,15 @@ async function geteditproduct(req, res) {
 
 async function posteditproduct(req, res) {
   console.log("body:", req.body);
-  const { name, price, imageUrl, description, _id, category } = req.body;
+  const { name, price, imageUrl, description, _id, category, condition } = req.body;
 
-  await products.updateproduct(name, price, imageUrl, description, _id, category);
+  await products.updateOne({_id}, {
+    name, price, image: imageUrl, description, category, condition
+  }).then(() => {console.log("Product updated");})
+  .catch(err => {
+    console.log(err);
+    res.status(500).send("Error updating product");
+  });
 
   res.redirect("/");
 }
@@ -69,7 +113,11 @@ async function getdeleteproduct(req, res) {
 function postdeleteproduct(req, res) {
   const _id = req.body._id;
 
-  products.deleteproduct(_id);
+  products.deleteOne({_id}).then(() => {
+    console.log("Product deleted");
+  }).catch(err => {
+    console.log(err);
+  });
 
   res.redirect("/");
 }
@@ -110,6 +158,9 @@ async function postAddCategory   (req, res)  {
 
 module.exports = {
   getAllpruducts,
+  getNewProducts,
+  getCategoryProducts,
+  addToCart,
   addproduct,
   postproduct,
   geteditproduct,
@@ -117,6 +168,6 @@ module.exports = {
   getdeleteproduct,
   postdeleteproduct,
   getdetails,
-  getAddCategory
-  ,postAddCategory
+  getAddCategory,
+  postAddCategory
 };

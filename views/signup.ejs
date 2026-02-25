@@ -2,75 +2,577 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Sign Up</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Sign Up – ALSHAPRAWY STORE</title>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/css/signup.css">
-</head>
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
+    :root {
+      --primary: #00c2ff;
+      --primary-glow: rgba(0,194,255,0.2);
+      --accent2: #a855f7;
+      --dark: #080e1a;
+      --dark2: #0d1526;
+      --dark3: #111d33;
+      --card: #0f1a2e;
+      --border: rgba(0,194,255,0.15);
+      --text: #e2eaf5;
+      --muted: #6b82a3;
+      --green: #00e5a0;
+      --amber: #f59e0b;
+      --red: #ff4757;
+    }
+
+    html { scroll-behavior: smooth; -webkit-tap-highlight-color: transparent; }
+
+    body {
+      font-family: 'Outfit', sans-serif;
+      background: var(--dark);
+      color: var(--text);
+      min-height: 100vh;
+      min-height: 100dvh;
+      display: flex;
+      flex-direction: column;
+      overflow-x: hidden;
+    }
+
+    /* noise */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* ── NAVBAR ── */
+    .navbar {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      background: rgba(8,14,26,0.96);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
+      padding: 0 1.25rem;
+      height: 60px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .navbar h1 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.4rem;
+      letter-spacing: 3px;
+      background: linear-gradient(90deg, var(--primary), var(--accent2));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .navbar nav { display: flex; gap: 0.25rem; }
+
+    .navbar nav a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 0.82rem;
+      font-weight: 600;
+      padding: 0.45rem 0.85rem;
+      border-radius: 8px;
+      border: 1px solid transparent;
+      transition: all 0.2s;
+      min-height: 44px;
+      display: flex;
+      align-items: center;
+    }
+
+    .navbar nav a:hover,
+    .navbar nav a:active {
+      color: var(--primary);
+      border-color: var(--border);
+      background: rgba(0,194,255,0.07);
+    }
+
+    /* ── PAGE BODY ── */
+    .page-body {
+      position: relative;
+      z-index: 1;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem 1.25rem 3rem;
+    }
+
+    .page-body::before {
+      content: '';
+      position: fixed;
+      top: 40%; left: 50%;
+      transform: translate(-50%,-50%);
+      width: 500px; height: 500px;
+      background: radial-gradient(circle, rgba(168,85,247,0.07), transparent 65%);
+      pointer-events: none;
+    }
+
+    /* ── MOBILE BRAND ── */
+    .mobile-brand {
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+
+    .mobile-brand .brand-icon {
+      width: 64px; height: 64px;
+      background: linear-gradient(135deg, var(--accent2), var(--primary));
+      border-radius: 18px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.8rem;
+      margin: 0 auto 0.9rem;
+      box-shadow: 0 12px 40px rgba(168,85,247,0.25);
+    }
+
+    .mobile-brand h2 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.6rem;
+      letter-spacing: 2px;
+    }
+
+    .mobile-brand h2 span { color: var(--primary); }
+
+    .mobile-brand p {
+      font-size: 0.83rem;
+      color: var(--muted);
+      margin-top: 0.3rem;
+    }
+
+    /* ── CARD ── */
+    .signup-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      width: 100%;
+      max-width: 440px;
+      padding: 2rem 1.75rem;
+      box-shadow: 0 24px 80px rgba(0,0,0,0.45);
+      animation: fadeUp 0.4s cubic-bezier(0.4,0,0.2,1) both;
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ── FORM HEADER ── */
+    .form-header { margin-bottom: 1.75rem; }
+
+    .form-header h3 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.8rem;
+      letter-spacing: 2px;
+      color: var(--text);
+      margin-bottom: 0.3rem;
+    }
+
+    .form-header p { font-size: 0.83rem; color: var(--muted); }
+
+    .form-header p a {
+      color: var(--primary);
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    /* ── FIELDS ── */
+    .field { margin-bottom: 1.1rem; }
+
+    label {
+      display: block;
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: var(--muted);
+      margin-bottom: 0.5rem;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+
+    /* Input wrapper for icon support */
+    .input-wrap {
+      position: relative;
+    }
+
+    .input-icon {
+      position: absolute;
+      left: 0.95rem;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 1rem;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    input[type="text"],
+    input[type="email"],
+    input[type="password"] {
+      width: 100%;
+      min-height: 50px;
+      padding: 0.85rem 1rem 0.85rem 2.75rem;
+      background: var(--dark2);
+      border: 1.5px solid rgba(255,255,255,0.07);
+      border-radius: 12px;
+      font-family: 'Outfit', sans-serif;
+      font-size: 1rem; /* ≥16px — no iOS zoom */
+      color: var(--text);
+      outline: none;
+      transition: all 0.25s;
+      -webkit-appearance: none;
+      appearance: none;
+    }
+
+    input:focus {
+      border-color: var(--primary);
+      background: rgba(0,194,255,0.04);
+      box-shadow: 0 0 0 3px var(--primary-glow);
+    }
+
+    input.valid { border-color: var(--green); }
+    input.error { border-color: var(--red); }
+
+    input::placeholder { color: #3a4d6a; }
+
+    /* ── STRENGTH BAR ── */
+    .strength-wrap {
+      margin-top: 0.6rem;
+    }
+
+    .strength-bar {
+      height: 4px;
+      background: rgba(255,255,255,0.06);
+      border-radius: 10px;
+      overflow: hidden;
+    }
+
+    .strength-fill {
+      height: 100%;
+      width: 0%;
+      border-radius: 10px;
+      transition: width 0.35s ease, background 0.35s ease;
+    }
+
+    .strength-label {
+      font-size: 0.72rem;
+      color: var(--muted);
+      margin-top: 0.35rem;
+      min-height: 1rem;
+      transition: color 0.3s;
+    }
+
+    /* ── SUBMIT ── */
+    button[type="submit"] {
+      width: 100%;
+      min-height: 52px;
+      padding: 0.9rem 1rem;
+      background: linear-gradient(135deg, var(--primary), var(--accent2));
+      color: white;
+      border: none;
+      border-radius: 12px;
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.1rem;
+      letter-spacing: 2px;
+      cursor: pointer;
+      transition: all 0.25s;
+      margin-top: 0.75rem;
+      box-shadow: 0 4px 24px rgba(0,194,255,0.2);
+      touch-action: manipulation;
+    }
+
+    button[type="submit"]:active {
+      transform: scale(0.98);
+      opacity: 0.9;
+    }
+
+    /* ── PERKS (mobile) ── */
+    .mobile-perks {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.65rem;
+      margin-top: 1.5rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid rgba(255,255,255,0.05);
+    }
+
+    .perk {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: var(--dark3);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 0.6rem 0.75rem;
+      font-size: 0.75rem;
+      color: var(--muted);
+      font-weight: 500;
+    }
+
+    .perk-icon { font-size: 0.95rem; flex-shrink: 0; }
+
+    /* ── TERMS ── */
+    .terms {
+      margin-top: 1.25rem;
+      font-size: 0.75rem;
+      color: var(--muted);
+      text-align: center;
+      line-height: 1.6;
+    }
+
+    .terms a {
+      color: var(--primary);
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    /* ── DESKTOP ── */
+    @media (min-width: 640px) {
+      .navbar { padding: 0 3rem; height: 70px; }
+      .navbar h1 { font-size: 1.8rem; }
+
+      .page-body { padding: 3rem 2rem; }
+
+      .mobile-brand { display: none; }
+      .mobile-perks  { display: none; }
+
+      .signup-card {
+        max-width: 860px;
+        padding: 0;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        overflow: hidden;
+      }
+
+      
+      .panel-left {
+        display: flex !important;
+        background: linear-gradient(135deg, #1a0540 0%, #001a3d 100%);
+        border-right: 1px solid var(--border);
+        padding: 3rem 2.5rem;
+        flex-direction: column;
+        justify-content: space-between;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .panel-left::before {
+        content: '';
+        position: absolute;
+        top: -80px; right: -80px;
+        width: 280px; height: 280px;
+        border-radius: 50%;
+        background: rgba(168,85,247,0.1);
+        pointer-events: none;
+      }
+
+      .panel-left::after {
+        content: '';
+        position: absolute;
+        bottom: -70px; left: -70px;
+        width: 240px; height: 240px;
+        border-radius: 50%;
+        background: rgba(0,194,255,0.07);
+        pointer-events: none;
+      }
+
+      .brand-mark {
+        width: 50px; height: 50px;
+        background: rgba(168,85,247,0.15);
+        border: 1px solid rgba(168,85,247,0.25);
+        border-radius: 14px;
+        display: flex; align-items: center; justify-content: center;
+        font-size: 1.5rem;
+        margin-bottom: 2rem;
+        position: relative; z-index: 1;
+      }
+
+      .panel-left h2 {
+        font-family: 'Bebas Neue', sans-serif;
+        font-size: 2rem;
+        letter-spacing: 2px;
+        line-height: 1.1;
+        margin-bottom: 0.75rem;
+        position: relative; z-index: 1;
+        color: var(--text);
+      }
+
+      .panel-left h2 span { color: var(--primary); }
+
+      .panel-left > div > p {
+        font-size: 0.88rem;
+        color: var(--muted);
+        line-height: 1.7;
+        position: relative; z-index: 1;
+      }
+
+      .features { position: relative; z-index: 1; }
+
+      .feature-item {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        margin-bottom: 0.9rem;
+      }
+
+      .feature-icon {
+        width: 34px; height: 34px;
+        background: rgba(168,85,247,0.1);
+        border: 1px solid rgba(168,85,247,0.2);
+        border-radius: 9px;
+        display: flex; align-items: center; justify-content: center;
+        font-size: 0.95rem;
+        flex-shrink: 0;
+      }
+
+      .feature-item span {
+        font-size: 0.83rem;
+        color: var(--muted);
+        font-weight: 500;
+      }
+
+      .panel-right { padding: 3rem 2.5rem; }
+    }
+
+    /* panel-left hidden on mobile */
+    .panel-left { display: none; }
+    .panel-right { width: 100%; }
+  </style>
+</head>
 <body>
 
+  <!-- ── NAVBAR ── -->
   <header class="navbar">
-    <h1>✦ ALSHABRAWY</h1>
+    <h1>ALSHAPRAWY</h1>
     <nav>
-
       <a href="/">Home</a>
-      <!-- <a href="#">Features</a> -->
-      <!-- <a href="#">Pricing</a> -->
       <a href="/signin">Sign In</a>
     </nav>
   </header>
 
+  <!-- ── PAGE BODY ── -->
   <div class="page-body">
+
+    <!-- Mobile brand header -->
+    <div class="mobile-brand">
+      <div class="brand-icon">🛒</div>
+      <h2>CREATE <span>ACCOUNT</span></h2>
+      <p>Join ALSHAPRAWY Store today</p>
+    </div>
+
     <div class="signup-card">
 
+      <!-- LEFT PANEL (desktop only) -->
       <div class="panel-left">
         <div>
-          <div class="brand-mark">✦</div>
-          <h2>Join thousands of happy users</h2>
-          <p>Create your free account and start building something amazing today.</p>
+          <div class="brand-mark">🛒</div>
+          <h2>JOIN THE <span>STORE</span></h2>
+          <p>Create your free account and get access to exclusive deals, order tracking, and fast checkout.</p>
         </div>
         <div class="features">
           <div class="feature-item">
             <div class="feature-icon">🔒</div>
-            <span>Secure &amp; private by default</span>
+            <span>Secure & private account</span>
+          </div>
+          <div class="feature-item">
+            <div class="feature-icon">🚚</div>
+            <span>Track orders in real time</span>
           </div>
           <div class="feature-item">
             <div class="feature-icon">⚡</div>
-            <span>Get started in under a minute</span>
+            <span>Faster checkout every time</span>
           </div>
           <div class="feature-item">
-            <div class="feature-icon">💳</div>
-            <span>No credit card required</span>
+            <div class="feature-icon">🎁</div>
+            <span>Exclusive member-only deals</span>
           </div>
         </div>
       </div>
 
+      <!-- RIGHT PANEL -->
       <div class="panel-right">
         <div class="form-header">
-          <h3>Create Account</h3>
-          <p>Already have one? <a href="/signin">Sign in</a></p>
+          <h3>CREATE ACCOUNT</h3>
+          <p>Already have one? <a href="/signin">Sign in →</a></p>
         </div>
 
-        <form action="/signup" method="POST">
+        <form action="/signup" method="POST" id="signup-form">
+
           <div class="field">
             <label for="name">Full Name</label>
-            <input type="text" id="name" name="name" placeholder="Jane Doe" required>
+            <div class="input-wrap">
+              <span class="input-icon">👤</span>
+              <input
+                type="text"
+                id="name"
+                name="name"
+                placeholder="Your full name"
+                autocomplete="name"
+                required
+              >
+            </div>
           </div>
+
           <div class="field">
             <label for="email">Email Address</label>
-            <input type="email" id="email" name="email" placeholder="jane@example.com" required>
+            <div class="input-wrap">
+              <span class="input-icon">📧</span>
+              <input
+                type="email"
+                id="email"
+                name="email"
+                placeholder="you@example.com"
+                autocomplete="email"
+                inputmode="email"
+                required
+              >
+            </div>
           </div>
+
           <div class="field">
             <label for="password">Password</label>
-            <input type="password" id="password" name="password" placeholder="Min. 8 characters" required>
-            <div class="strength-bar"><div class="strength-fill" id="strength-fill"></div></div>
+            <div class="input-wrap">
+              <span class="input-icon">🔑</span>
+              <input
+                type="password"
+                id="password"
+                name="password"
+                placeholder="Min. 8 characters"
+                autocomplete="new-password"
+                required
+              >
+            </div>
+            <div class="strength-wrap">
+              <div class="strength-bar">
+                <div class="strength-fill" id="strength-fill"></div>
+              </div>
+              <div class="strength-label" id="strength-label"></div>
+            </div>
           </div>
+
           <input type="hidden" name="role" value="user">
-          <button type="submit">Create Account →</button>
+
+          <button type="submit">CREATE ACCOUNT →</button>
         </form>
 
+        <!-- Mobile perks grid -->
+        <div class="mobile-perks">
+          <div class="perk"><span class="perk-icon">🔒</span> Secure</div>
+          <div class="perk"><span class="perk-icon">🚚</span> Track Orders</div>
+          <div class="perk"><span class="perk-icon">⚡</span> Fast Checkout</div>
+          <div class="perk"><span class="perk-icon">🎁</span> Member Deals</div>
+        </div>
+
         <div class="terms">
-          By signing up you agree to our <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a>.
+          By signing up you agree to our
+          <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a>.
         </div>
       </div>
 
@@ -78,8 +580,18 @@
   </div>
 
   <script>
-    const pwd  = document.getElementById('password');
-    const fill = document.getElementById('strength-fill');
+    const pwd    = document.getElementById('password');
+    const fill   = document.getElementById('strength-fill');
+    const lbl    = document.getElementById('strength-label');
+
+    const levels = [
+      { width: '0%',   color: 'transparent',         text: '' },
+      { width: '25%',  color: '#ff4757',              text: 'Weak' },
+      { width: '50%',  color: '#f59e0b',              text: 'Fair' },
+      { width: '75%',  color: '#00c2ff',              text: 'Good' },
+      { width: '100%', color: '#00e5a0',              text: 'Strong 💪' },
+    ];
+
     pwd.addEventListener('input', () => {
       const v = pwd.value;
       let score = 0;
@@ -87,11 +599,37 @@
       if (/[A-Z]/.test(v))         score++;
       if (/[0-9]/.test(v))         score++;
       if (/[^A-Za-z0-9]/.test(v))  score++;
-      const widths = ['0%','30%','55%','80%','100%'];
-      const colors = ['transparent','#f59e0b','#f59e0b','#6366f1','#10b981'];
-      fill.style.width      = widths[score];
-      fill.style.background = colors[score];
+
+      const lvl = levels[score];
+      fill.style.width      = lvl.width;
+      fill.style.background = lvl.color;
+      lbl.textContent       = lvl.text;
+      lbl.style.color       = lvl.color;
+    });
+
+    // Live validation feedback
+    const emailInput = document.getElementById('email');
+    emailInput.addEventListener('blur', () => {
+      if (emailInput.value && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailInput.value)) {
+        emailInput.classList.add('valid');
+        emailInput.classList.remove('error');
+      } else if (emailInput.value) {
+        emailInput.classList.add('error');
+        emailInput.classList.remove('valid');
+      }
+    });
+
+    const nameInput = document.getElementById('name');
+    nameInput.addEventListener('blur', () => {
+      if (nameInput.value.trim().length >= 2) {
+        nameInput.classList.add('valid');
+        nameInput.classList.remove('error');
+      } else if (nameInput.value) {
+        nameInput.classList.add('error');
+        nameInput.classList.remove('valid');
+      }
     });
   </script>
+
 </body>
 </html>

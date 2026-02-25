@@ -1,56 +1,608 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Add Product</title>
-    <link rel="stylesheet" href="/css/add-product.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Add Product – ALSHAPRAWY STORE</title>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/add-product.css">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --primary: #00c2ff;
+      --primary-glow: rgba(0,194,255,0.2);
+      --accent2: #a855f7;
+      --dark: #080e1a;
+      --dark2: #0d1526;
+      --dark3: #111d33;
+      --card: #0f1a2e;
+      --border: rgba(0,194,255,0.15);
+      --text: #e2eaf5;
+      --muted: #6b82a3;
+      --green: #00e5a0;
+      --amber: #f59e0b;
+    }
+
+    html { -webkit-tap-highlight-color: transparent; scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Outfit', sans-serif;
+      background: var(--dark);
+      color: var(--text);
+      min-height: 100vh;
+      min-height: 100dvh;
+      display: flex;
+      flex-direction: column;
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* ── NAVBAR ── */
+    .navbar {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      background: rgba(8,14,26,0.96);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
+      padding: 0 1.25rem;
+      height: 60px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .navbar h1 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.4rem;
+      letter-spacing: 3px;
+      background: linear-gradient(90deg, var(--primary), var(--accent2));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .navbar-back {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 0.82rem;
+      font-weight: 600;
+      padding: 0.45rem 0.85rem;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      min-height: 44px;
+      transition: all 0.2s;
+    }
+
+    .navbar-back:hover { color: var(--primary); border-color: var(--primary); background: rgba(0,194,255,0.07); }
+
+    /* ── MAIN ── */
+    main {
+      position: relative;
+      z-index: 1;
+      flex: 1;
+      padding: 1.75rem 1.25rem 3rem;
+      max-width: 640px;
+      margin: 0 auto;
+      width: 100%;
+    }
+
+    /* ── PAGE HEADER ── */
+    .page-header { margin-bottom: 2rem; }
+
+    .page-tag {
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--accent2);
+      margin-bottom: 0.35rem;
+    }
+
+    .page-header h2 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 2rem;
+      letter-spacing: 2px;
+    }
+
+    .page-header h2 span { color: var(--primary); }
+
+    .page-header p {
+      font-size: 0.83rem;
+      color: var(--muted);
+      margin-top: 0.3rem;
+    }
+
+    /* ── FORM ── */
+    .product-form {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    /* ── CARD SECTIONS ── */
+    .form-section {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 1.4rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .section-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 0.88rem;
+      letter-spacing: 2.5px;
+      color: var(--muted);
+      padding-bottom: 0.7rem;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+    }
+
+    /* ── FIELD ── */
+    .form-control { display: flex; flex-direction: column; gap: 0.45rem; }
+
+    .form-control > label,
+    .field-label {
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: var(--muted);
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    /* ── INPUT WRAPPER ── */
+    .input-wrap { position: relative; }
+
+    .input-icon {
+      position: absolute;
+      left: 0.95rem;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 1rem;
+      pointer-events: none;
+    }
+
+    /* ── BASE INPUT STYLES ── */
+    input[type="text"],
+    input[type="number"],
+    textarea {
+      width: 100%;
+      min-height: 50px;
+      padding: 0.85rem 1rem 0.85rem 2.75rem;
+      background: var(--dark2);
+      border: 1.5px solid rgba(255,255,255,0.06);
+      border-radius: 12px;
+      font-family: 'Outfit', sans-serif;
+      font-size: 1rem;
+      color: var(--text);
+      outline: none;
+      transition: all 0.25s;
+      -webkit-appearance: none;
+      appearance: none;
+    }
+
+    input[type="number"]::-webkit-inner-spin-button,
+    input[type="number"]::-webkit-outer-spin-button { -webkit-appearance: none; }
+
+    input:focus, textarea:focus {
+      border-color: var(--primary);
+      background: rgba(0,194,255,0.03);
+      box-shadow: 0 0 0 3px var(--primary-glow);
+    }
+
+    input::placeholder, textarea::placeholder { color: #2a3a52; }
+
+    textarea {
+      min-height: 110px;
+      resize: vertical;
+      line-height: 1.6;
+      padding-top: 0.85rem;
+    }
+
+    .textarea-wrap { position: relative; }
+    .textarea-wrap .input-icon { top: 1rem; transform: none; }
+
+    /* image preview */
+    #img-preview {
+      display: none;
+      margin-top: 0.6rem;
+      background: var(--dark3);
+      border: 1px dashed rgba(0,194,255,0.2);
+      border-radius: 10px;
+      padding: 1rem;
+      align-items: center;
+      justify-content: center;
+      min-height: 100px;
+    }
+
+    #img-preview.visible { display: flex; }
+
+    #img-preview img {
+      max-height: 100px;
+      max-width: 100%;
+      object-fit: contain;
+      border-radius: 6px;
+    }
+
+    /* ── CONDITION RADIO ── */
+    .condition-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.55rem;
+    }
+
+    /* hide the native radio visually but keep it accessible */
+    .cond-row {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      background: var(--dark2);
+      border: 1.5px solid rgba(255,255,255,0.06);
+      border-radius: 12px;
+      padding: 0.9rem 1.1rem;
+      cursor: pointer;
+      transition: all 0.25s;
+      min-height: 58px;
+      touch-action: manipulation;
+    }
+
+    .cond-row:active { transform: scale(0.98); }
+
+    /* native radio — restyled */
+    .cond-row input[type="radio"] {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 20px;
+      height: 20px;
+      min-width: 20px;
+      border-radius: 50%;
+      border: 2px solid #2e3f58;
+      background: var(--dark3);
+      cursor: pointer;
+      transition: all 0.25s;
+      position: relative;
+      flex-shrink: 0;
+    }
+
+    .cond-row input[type="radio"]::after {
+      content: '';
+      position: absolute;
+      top: 50%; left: 50%;
+      transform: translate(-50%,-50%) scale(0);
+      width: 9px; height: 9px;
+      border-radius: 50%;
+      transition: transform 0.2s;
+    }
+
+    /* NEW — green */
+    .cond-row.cond-new input[type="radio"]:checked {
+      border-color: var(--green);
+      background: rgba(0,229,160,0.1);
+    }
+
+    .cond-row.cond-new input[type="radio"]:checked::after {
+      background: var(--green);
+      transform: translate(-50%,-50%) scale(1);
+    }
+
+    .cond-row.cond-new.row-checked {
+      border-color: rgba(0,229,160,0.35);
+      background: rgba(0,229,160,0.04);
+    }
+
+    .cond-row.cond-new.row-checked .cond-name { color: var(--green); }
+
+    /* USED — amber */
+    .cond-row.cond-used input[type="radio"]:checked {
+      border-color: var(--amber);
+      background: rgba(245,158,11,0.1);
+    }
+
+    .cond-row.cond-used input[type="radio"]:checked::after {
+      background: var(--amber);
+      transform: translate(-50%,-50%) scale(1);
+    }
+
+    .cond-row.cond-used.row-checked {
+      border-color: rgba(245,158,11,0.35);
+      background: rgba(245,158,11,0.04);
+    }
+
+    .cond-row.cond-used.row-checked .cond-name { color: var(--amber); }
+
+    .cond-emoji { font-size: 1.2rem; flex-shrink: 0; }
+
+    .cond-text { display: flex; flex-direction: column; gap: 0.1rem; }
+
+    .cond-name {
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: var(--text);
+      transition: color 0.25s;
+    }
+
+    .cond-desc {
+      font-size: 0.74rem;
+      color: var(--muted);
+    }
+
+    /* ── CATEGORY RADIO ── */
+    .radio-group {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+      gap: 0.5rem;
+    }
+
+    .radio-label {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      background: var(--dark2);
+      border: 1.5px solid rgba(255,255,255,0.06);
+      border-radius: 10px;
+      padding: 0.65rem 0.85rem;
+      cursor: pointer;
+      transition: all 0.2s;
+      min-height: 44px;
+      touch-action: manipulation;
+    }
+
+    .radio-label:active { transform: scale(0.97); }
+
+    /* restyled native radio */
+    .radio-label input[type="radio"] {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 16px;
+      height: 16px;
+      min-width: 16px;
+      border-radius: 50%;
+      border: 2px solid #2e3f58;
+      background: var(--dark3);
+      cursor: pointer;
+      transition: all 0.2s;
+      position: relative;
+      flex-shrink: 0;
+    }
+
+    .radio-label input[type="radio"]::after {
+      content: '';
+      position: absolute;
+      top: 50%; left: 50%;
+      transform: translate(-50%,-50%) scale(0);
+      width: 7px; height: 7px;
+      border-radius: 50%;
+      background: var(--primary);
+      transition: transform 0.2s;
+    }
+
+    .radio-label input[type="radio"]:checked {
+      border-color: var(--primary);
+      background: rgba(0,194,255,0.1);
+    }
+
+    .radio-label input[type="radio"]:checked::after {
+      transform: translate(-50%,-50%) scale(1);
+    }
+
+    .radio-label.cat-checked {
+      border-color: rgba(0,194,255,0.35);
+      background: rgba(0,194,255,0.05);
+    }
+
+    .radio-label.cat-checked .radio-text { color: var(--primary); font-weight: 600; }
+
+    .radio-text {
+      font-size: 0.84rem;
+      color: var(--muted);
+      font-weight: 500;
+      transition: color 0.2s;
+    }
+
+    /* ── SUBMIT ── */
+    .btn[type="submit"] {
+      min-height: 54px;
+      padding: 0.9rem 1rem;
+      background: linear-gradient(135deg, var(--primary), var(--accent2));
+      color: white;
+      border: none;
+      border-radius: 14px;
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.15rem;
+      letter-spacing: 3px;
+      cursor: pointer;
+      transition: all 0.25s;
+      box-shadow: 0 4px 24px rgba(0,194,255,0.2);
+      touch-action: manipulation;
+      width: 100%;
+    }
+
+    .btn[type="submit"]:active { transform: scale(0.98); opacity: 0.9; }
+
+    @media (min-width: 640px) {
+      .navbar { padding: 0 3rem; height: 70px; }
+      .navbar h1 { font-size: 1.8rem; }
+      main { padding: 2.5rem 3rem 3.5rem; }
+      .btn[type="submit"]:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 30px rgba(0,194,255,0.3);
+      }
+    }
+  </style>
 </head>
-<body class="theme-emerald">
+<body>
 
-<header class="navbar">
-    <h1>Add New Product</h1>
-</header>
+  <!-- ── NAVBAR ── -->
+  <header class="navbar">
+    <h1>ALSHAPRAWY</h1>
+    <a href="/" class="navbar-back">← Shop</a>
+  </header>
 
-<main class="form-container">
+  <!-- ── MAIN ── -->
+  <main>
+
+    <div class="page-header">
+      <div class="page-tag">✦ Admin Panel</div>
+      <h2>ADD NEW <span>PRODUCT</span></h2>
+      <p>Fill in the details below to list a new item in the store.</p>
+    </div>
+
     <form class="product-form" action="/newproduct" method="POST">
 
+      <!-- ── SECTION 1: Basic Info ── -->
+      <div class="form-section">
+        <div class="section-title">PRODUCT INFO</div>
+
         <div class="form-control">
-            <label for="title">Product Name</label>
-            <input type="text" name="name" id="title" placeholder="Enter product name" required>
+          <label for="title">Product Name</label>
+          <div class="input-wrap">
+            <span class="input-icon">🏷️</span>
+            <input type="text" name="name" id="title" placeholder="e.g. Mechanical Keyboard RGB" required>
+          </div>
         </div>
 
         <div class="form-control">
-            <label for="imageUrl">Image URL</label>
+          <label for="price">Price (EGP)</label>
+          <div class="input-wrap">
+            <span class="input-icon">💰</span>
+            <input type="number" name="price" id="price" step="0.01" min="0" placeholder="0.00" inputmode="decimal" required>
+          </div>
+        </div>
+
+        <div class="form-control">
+          <label for="description">Description</label>
+          <div class="textarea-wrap">
+            <span class="input-icon">📝</span>
+            <textarea name="description" id="description" rows="4" placeholder="Specs, features, compatibility..." required></textarea>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── SECTION 2: Image ── -->
+      <div class="form-section">
+        <div class="section-title">PRODUCT IMAGE</div>
+
+        <div class="form-control">
+          <label for="imageUrl">Image URL</label>
+          <div class="input-wrap">
+            <span class="input-icon">🖼️</span>
             <input type="text" name="imageUrl" id="imageUrl" placeholder="https://example.com/image.jpg" required>
+          </div>
+          <div id="img-preview">
+            <img id="img-preview-img" src="" alt="Preview">
+          </div>
         </div>
+      </div>
+
+      <!-- ── SECTION 3: Condition ── -->
+      <div class="form-section">
+        <div class="section-title">CONDITION</div>
 
         <div class="form-control">
-            <label for="price">Price (EGP)</label>
-            <input type="number" name="price" id="price" step="0.01" placeholder="0.00" required>
+          <span class="field-label">Is this product new or used?</span>
+          <div class="condition-group">
+
+            <label class="cond-row cond-new" id="row-new" for="cond-new">
+              <input type="radio" name="condition" id="cond-new" value="new" required checked>
+              <span class="cond-emoji">✨</span>
+              <div class="cond-text">
+                <span class="cond-name">Brand New</span>
+                <span class="cond-desc">Sealed, never used, original packaging</span>
+              </div>
+            </label>
+
+            <label class="cond-row cond-used" id="row-used" for="cond-used">
+              <input type="radio" name="condition" id="cond-used" value="used">
+              <span class="cond-emoji">🔄</span>
+              <div class="cond-text">
+                <span class="cond-name">Used</span>
+                <span class="cond-desc">Pre-owned, good working condition</span>
+              </div>
+            </label>
+
+          </div>
         </div>
+      </div>
+
+      <!-- ── SECTION 4: Category ── -->
+      <div class="form-section">
+        <div class="section-title">CATEGORY</div>
 
         <div class="form-control">
-            <label>Category</label>
-            <div class="radio-group">
-                <% cat.forEach(c => { %>
-                    <label class="radio-label">
-                        <input type="radio" name="category" value="<%= c.name %>" required>
-                        <span class="radio-custom"></span>
-                        <span class="radio-text"><%= c.name %></span>
-                    </label>
-                <% }) %>
-            </div>
+          <span class="field-label">Select a category</span>
+          <div class="radio-group" id="cat-group">
+            <% cat.forEach(c => { %>
+              <label class="radio-label">
+                <input type="radio" name="category" value="<%= c.name %>" required>
+                <span class="radio-text"><%= c.name %></span>
+              </label>
+            <% }) %>
+          </div>
         </div>
+      </div>
 
-        <div class="form-control">
-            <label for="description">Description</label>
-            <textarea name="description" id="description" rows="5" placeholder="Product description..." required></textarea>
-        </div>
-
-        <button class="btn" type="submit">Add Product</button>
+      <button class="btn" type="submit">✦ Add Product to Store</button>
 
     </form>
-</main>
+  </main>
+
+  <script>
+    // ── IMAGE PREVIEW ──
+    const imgInput   = document.getElementById('imageUrl');
+    const preview    = document.getElementById('img-preview');
+    const previewImg = document.getElementById('img-preview-img');
+    let debounce;
+    imgInput.addEventListener('input', () => {
+      clearTimeout(debounce);
+      debounce = setTimeout(() => {
+        const url = imgInput.value.trim();
+        if (url) {
+          previewImg.src = url;
+          previewImg.onload  = () => preview.classList.add('visible');
+          previewImg.onerror = () => preview.classList.remove('visible');
+        } else {
+          preview.classList.remove('visible');
+        }
+      }, 600);
+    });
+
+    // ── CONDITION HIGHLIGHT ──
+    const condNew  = document.getElementById('cond-new');
+    const condUsed = document.getElementById('cond-used');
+    const rowNew   = document.getElementById('row-new');
+    const rowUsed  = document.getElementById('row-used');
+
+    function syncCondition() {
+      rowNew.classList.toggle('row-checked',  condNew.checked);
+      rowUsed.classList.toggle('row-checked', condUsed.checked);
+    }
+
+    condNew.addEventListener('change',  syncCondition);
+    condUsed.addEventListener('change', syncCondition);
+
+    // ── CATEGORY HIGHLIGHT ──
+    document.querySelectorAll('#cat-group .radio-label input').forEach(r => {
+      r.addEventListener('change', () => {
+        document.querySelectorAll('#cat-group .radio-label').forEach(l => l.classList.remove('cat-checked'));
+        if (r.checked) r.closest('.radio-label').classList.add('cat-checked');
+      });
+    });
+  </script>
 
 </body>
 </html>

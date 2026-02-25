@@ -18,18 +18,32 @@ const productSchema = new mongoose.Schema({
     type: Number,
     required: true,
   },
-  category:{
-    type:String,
-    required:false,
-  }
+  category: {
+    type: String,
+    required: false,
+  },
+  // additional fields for filtering/display
+  condition: {
+    type: String,
+    enum: ['new', 'used'],
+    default: 'new'
+  },
+ 
 });
 
 
 productSchema.statics.feichAllproducts = function() {
-
   return this.find();
+};
 
-}
+// helper queries used by controllers
+productSchema.statics.findByCategory = function(category) {
+  return this.find({ category });
+};
+
+productSchema.statics.findNew = function() {
+  return this.find({ isNew: true });
+};
 
  productSchema.methods.postproduct   =async function(Name, Price, Image, Description,category) {
   // console.log(Name,Price,Description,Image)
@@ -64,15 +78,17 @@ productSchema.statics.feichAllproducts = function() {
       throw err;
     });
 }
- productSchema.methods.updateproduct=function(name, price, imageUrl, description, _id, category) {
+ productSchema.methods.updateproduct=function(name, price, imageUrl, description, _id, category, isNew, condition) {
   ProductModel.findByIdAndUpdate(
     { _id: _id },
     {
       name: name,
       price: price,
-      category:category,
+      category: category,
       image: imageUrl,
       description: description,
+      isNew: isNew,
+      condition: condition
     }
   )
     .then((r) => console.log("edit updated"))

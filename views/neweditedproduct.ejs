@@ -6,6 +6,7 @@
     <link rel="stylesheet" href="/css/add-product.css">
 </head>
 <body class="theme-emerald">
+
 <header class="navbar">
     <h1>Edit Product</h1>
 </header>
@@ -13,31 +14,64 @@
 <main class="form-container">
     <form class="product-form" action="/editproduct" method="POST">
 
+        <!-- Hidden ID -->
+        <input type="hidden" name="id" value="<%= product._id %>">
+
+        <!-- Product Name -->
         <div class="form-control">
             <label for="name">Product Name</label>
-            <input type="text" name="name" id="name" value="<%= product.name %>" required>
+            <input 
+                type="text" 
+                name="name" 
+                id="name" 
+                value="<%= product.name %>" 
+                required>
         </div>
 
+        <!-- Image URL -->
         <div class="form-control">
             <label for="imageUrl">Image URL</label>
-            <input type="text" name="imageUrl" id="imageUrl" value="<%= product.image %>" required>
+            <input 
+                type="text" 
+                name="imageUrl" 
+                id="imageUrl" 
+                value="<%= product.imageUrl || product.image %>" 
+                required>
         </div>
 
         <!-- Image Preview -->
         <div class="image-preview">
-            <img src="<%= product.image %>" alt="Product Image">
+            <% if (product.imageUrl || product.image) { %>
+                <img src="<%= product.imageUrl || product.image %>" alt="Product Image">
+            <% } else { %>
+                <p>No image available</p>
+            <% } %>
         </div>
 
+        <!-- Price -->
         <div class="form-control">
             <label for="price">Price (EGP)</label>
-            <input type="number" name="price" id="price" step="0.01" value="<%= product.price %>" required>
+            <input 
+                type="number" 
+                name="price" 
+                id="price" 
+                step="0.01" 
+                value="<%= product.price %>" 
+                required>
         </div>
-<div class="form-control">
+
+        <!-- Category -->
+        <div class="form-control">
             <label>Category</label>
             <div class="radio-group">
                 <% cat.forEach(c => { %>
                     <label class="radio-label">
-                        <input type="radio" name="category" value="<%= c.name %>" required <%= c.name === product.category ? 'checked' : '' %> >
+                        <input 
+                            type="radio" 
+                            name="category" 
+                            value="<%= c.name %>" 
+                            <%= c.name === product.category ? 'checked' : '' %> 
+                            required>
                         <span class="radio-custom"></span>
                         <span class="radio-text"><%= c.name %></span>
                     </label>
@@ -45,18 +79,36 @@
             </div>
         </div>
 
+        <!-- Condition -->
         <div class="form-control">
-            <label for="description">Description</label>
-            <textarea name="description" id="description" rows="5" required><%= product.description %></textarea>
+            <label>Condition</label>
+            <div class="condition-group">
+
+                <label class="cond-row">
+                    <input 
+                        type="radio" 
+                        name="condition" 
+                        value="new" 
+                        <%= product.condition === 'new' ? 'checked' : '' %> 
+                        required>
+                    <div class="cond-name">New</div>
+                    <div class="cond-desc">Brand new sealed item</div>
+                </label>
+
+                <label class="cond-row">
+                    <input 
+                        type="radio" 
+                        name="condition" 
+                        value="used" 
+                        <%= product.condition === 'used' ? 'checked' : '' %>>
+                    <div class="cond-name">Used</div>
+                    <div class="cond-desc">Pre-owned, good working condition</div>
+                </label>
+
+            </div>
         </div>
-    
 
-            
-        </div>
-
-        <input type="hidden" name="_id" value="<%= product._id %>">
-
-        <button  class="btn" type="submit">Update Product</button>
+        <button class="btn" type="submit">Update Product</button>
 
     </form>
 </main>
